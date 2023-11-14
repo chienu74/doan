@@ -1,0 +1,30 @@
+﻿@using doan.Models;
+@using doan.Utilities;
+@model IList<Blog>
+
+
+
+<!--Recent Post -->
+<div class="sidebar-widget">
+    <h2 class="widget-title">Recent Post</h2>
+    <div class="recent-post">
+        @foreach(var item in Model)
+        {
+            String url = Functions.TitleSlugGeneration("blog", item.Alias, item.BlogId);
+            <div class="post-item">
+                <div class="post-img">
+                    <img src="@item.Image" />
+                </div>
+                <div class="post-text">
+                    <a href="/@url">@item.Title</a>
+                    <div class="post-meta">
+                        <p>By<a href="">@item.CreatedBy</a></p>
+                        <p>In<a href="">Web Design</a></p>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+<!--Recent Post End -->

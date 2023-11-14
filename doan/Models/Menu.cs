@@ -9,8 +9,8 @@ namespace doan.Models
         [Key]
         public int MenuId { get; set; }
 
-        public string? Title { get; set; }
-
+        public string? MenuName { get; set; }
+    
         public string? Alias { get; set; }
 
         public string? Description { get; set; }
@@ -30,5 +30,6 @@ namespace doan.Models
         public string? ModifiedBy { get; set; }
 
         public bool? IsActive { get; set; }
-    }
+        public string? Link { get; set; }
+    } 
 }

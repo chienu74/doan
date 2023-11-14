@@ -1,4 +1,7 @@
-﻿@model IList<Menu>
+﻿@using doan.Utilities;
+@model IList<Menu>
+
+
 <div class="navbar navbar-expand-lg bg-light navbar-light">
     <div class="container-fluid">
         <a href="index.html" class="navbar-brand">Burger <span>King</span></a>
@@ -10,20 +13,32 @@
             <div class="navbar-nav ml-auto">
                 @foreach (var menu in Model.Where(m=>m.Levels==1))
                 {
+                    
                     var Pid = menu.MenuId;
+                    string url = Functions.TitleSlugGeneration("list", menu.MenuName, menu.MenuId);
+                    if(!string.IsNullOrEmpty(menu.Link))
+                    {
+                        url = menu.Link;
+                    }
+
                     var Smenu = Model.Where(p => p.ParentId == Pid).ToList();
 
                     @if (Smenu.Count == 0)
                     {
-                        <a href="index.html" class="nav-item nav-link ">@menu.Title</a>
+                        <a href="/@url" class="nav-item nav-link ">@menu.MenuName</a>
                     }
                     else
                     {
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">@menu.Title</a>
+                            <a href="/@url" class="nav-link dropdown-toggle" data-toggle="dropdown">@menu.MenuName</a>
                             <div class="dropdown-menu">
                                 @foreach(var smn in Smenu){
-                                    <a href="blog.html" class="dropdown-item">@smn.Title</a>
+                                    string url1 = Functions.TitleSlugGeneration("list", smn.MenuName, smn.MenuId);
+                                    if (!string.IsNullOrEmpty(smn.Link))
+                                    {
+                                        url = smn.Link;
+                                    }
+                                    <a href="/@url1" class="dropdown-item">@smn.MenuName</a>
                                 }
                             </div>
                         </div>
