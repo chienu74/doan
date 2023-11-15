@@ -10,7 +10,7 @@
             <h2>Latest From Food Blog</h2>
         </div>
         <div class="row">
-            @foreach(var item in Model)
+            @* @foreach(var item in Model)
             {
                 string url = Functions.TitleSlugGeneration("blog", item.Alias, item.BlogId);
                 <div class="col-md-6">
@@ -23,7 +23,7 @@
                             <div class="blog-meta">
                                 <p><i class="far fa-user"></i>@item.CreatedBy</p>
                                 <p><i class="far fa-list-alt"></i>Food</p>
-                                <p><i class="far fa-calendar-alt"></i>@item.ModifiedDate.ToString("dd-MM-yyyy")</p>
+                                <p><i class="far fa-calendar-alt"></i>@item.CreatedDate.Value.ToString("dd-MM-yyyy")</p>
                                 <p><i class="far fa-comments"></i>10</p>
                             </div>
                             <div class="blog-text">
@@ -36,7 +36,7 @@
                     </div>
                 </div>
 
-            }
+            } *@
         </div>
     </div>
 </div>

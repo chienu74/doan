@@ -38,6 +38,6 @@ namespace doan.Models
         public int? AccountId { get; set; }
 
         public bool? IsActive { get; set; }
-        public int MenuID { get; set; }
+        public int? MenuID { get; set; }
     }
 }

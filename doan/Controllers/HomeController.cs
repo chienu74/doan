@@ -32,8 +32,7 @@ namespace doan.Controllers
             {
                 return NotFound();
             }
-            var blog = _context.Blogs
-                .FirstOrDefault(m => (m.BlogId == id) &&(m.IsActive ==true));
+            var blog = _context.Blogs.FirstOrDefault(m => (m.BlogId == id) &&(m.IsActive ==true));
             if (blog == null)
             {
                 return NotFound();
