@@ -40,8 +40,13 @@ namespace doan.Controllers
             return View(blog);
         }
         [Route("/list-{slug}-{id:int}.html", Name ="List")]
-        public IActionResult List(int? id)
+        public IActionResult List(int? id,string slug)
         {
+            if(slug == "home")
+            {
+                return View("Index");
+            }
+
             if (id == null)
             {
                 return NotFound();
