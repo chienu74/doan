@@ -48,11 +48,11 @@ namespace doan.Areas.Admin.Controllers
         }
         public IActionResult Create()
         {
-            var mnList = (from m in _context.Menus
+            var mnList = (from m in _context.Blogs
                           select new SelectListItem()
                           {
-                              Text = m.MenuName,
-                              Value = m.MenuId.ToString()
+                              Text = m.Title,
+                              Value = m.BlogId.ToString()
                           }).ToList();
             mnList.Insert(0, new SelectListItem()
             {
@@ -64,11 +64,11 @@ namespace doan.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Menu mn)
+        public IActionResult Create(Blog mn)
         {
             if (ModelState.IsValid)
             {
-                _context.Menus.Add(mn);
+                _context.Blogs.Add(mn);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -81,16 +81,16 @@ namespace doan.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var mn = _context.Menus.Find(id);
+            var mn = _context.Blogs.Find(id);
             if (mn == null)
             {
                 return NotFound();
             }
-            var mnList = (from m in _context.Menus
+            var mnList = (from m in _context.Blogs
                           select new SelectListItem()
                           {
-                              Text = m.MenuName,
-                              Value = m.MenuId.ToString()
+                              Text = m.Title,
+                              Value = m.BlogId.ToString()
                           }).ToList();
             mnList.Insert(0, new SelectListItem()
             {
@@ -102,11 +102,11 @@ namespace doan.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Menu mn)
+        public IActionResult Edit(Blog mn)
         {
             if (ModelState.IsValid)
             {
-                _context.Menus.Update(mn);
+                _context.Blogs.Update(mn);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }

@@ -6,9 +6,6 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
-
-
 <div class="app-content content">
     <div class="content-wrapper">
         <p>
@@ -25,9 +22,6 @@
                             @Html.DisplayNameFor(model => model.Title)
                         </th>
                         <th scope="col">
-                            @Html.DisplayNameFor(model => model.Alias)
-                        </th>
-                        <th scope="col">
                             @Html.DisplayNameFor(model => model.IsActive)
                         </th>
                         <th scope="col">
@@ -41,9 +35,6 @@
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Title)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Alias)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.IsActive)
