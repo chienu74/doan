@@ -1,0 +1,62 @@
+﻿@* @model IList<Menu> *@
+@using doan.Models;
+@model IEnumerable<doan.Models.Blog>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+
+<div class="app-content content">
+    <div class="content-wrapper">
+        <p>
+            <a type="buton" class="btn btn-success" asp-area="Admin" asp-controller="Blog" asp-action="Create">
+                <i class="bi bi-file-earmark-text me-1"></i>
+                Thêm bài viết
+            </a>
+        </p>
+        <div class="content-body">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">
+                            @Html.DisplayNameFor(model => model.Title)
+                        </th>
+                        <th scope="col">
+                            @Html.DisplayNameFor(model => model.Alias)
+                        </th>
+                        <th scope="col">
+                            @Html.DisplayNameFor(model => model.IsActive)
+                        </th>
+                        <th scope="col">
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Alias)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsActive)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.BlogId" class="btn mr-1 mb-1 btn-success">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@item.BlogId" class="btn mr-1 mb-1 btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

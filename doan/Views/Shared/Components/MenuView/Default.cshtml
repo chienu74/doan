@@ -4,7 +4,7 @@
 
 <div class="navbar navbar-expand-lg bg-light navbar-light">
     <div class="container-fluid">
-        <a href="index.html" class="navbar-brand">Burger <span>King</span></a>
+        <a href="Home" class="navbar-brand">Burger <span>King</span></a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -15,7 +15,7 @@
                 {
                     
                     var Pid = menu.MenuId;
-                    string url = Functions.TitleSlugGeneration("list", menu.MenuName, menu.MenuId);
+                    string url = Functions.TitleSlugGeneration("list", menu.Alias, menu.MenuId);
                     if(!string.IsNullOrEmpty(menu.Link))
                     {
                         url = menu.Link;
@@ -25,7 +25,9 @@
 
                     @if (Smenu.Count == 0)
                     {
+                        
                         <a href="/@url" class="nav-item nav-link ">@menu.MenuName</a>
+                        
                     }
                     else
                     {
@@ -33,10 +35,11 @@
                             <a href="/@url" class="nav-link dropdown-toggle" data-toggle="dropdown">@menu.MenuName</a>
                             <div class="dropdown-menu">
                                 @foreach(var smn in Smenu){
-                                    string url1 = Functions.TitleSlugGeneration("list", smn.MenuName, smn.MenuId);
+                                    string url1 = Functions.TitleSlugGeneration("list", smn.Alias, smn.MenuId);
+
                                     if (!string.IsNullOrEmpty(smn.Link))
                                     {
-                                        url = smn.Link;
+                                        url1 = smn.Link;
                                     }
                                     <a href="/@url1" class="dropdown-item">@smn.MenuName</a>
                                 }

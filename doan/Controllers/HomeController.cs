@@ -42,10 +42,11 @@ namespace doan.Controllers
         [Route("/list-{slug}-{id:int}.html", Name ="List")]
         public IActionResult List(int? id,string slug)
         {
-            if(slug == "home")
+            /*if(slug == "home")
             {
                 return View("Index");
-            }
+            }*/
+          
 
             if (id == null)
             {

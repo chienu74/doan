@@ -1,0 +1,61 @@
+﻿@using doan.Areas.Admin.Models
+@using doan.Utilities
+@model IList<AdminMenu>
+
+<div class="main-menu-content">
+   @*  <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+        <li class="active">
+            <a href="index.html"><i class="ft-home"></i><span class="menu-title" data-i18n="">Dashboard</span></a>
+        </li>
+        <li class=" nav-item">
+            <a href="charts.html"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Charts</span></a>
+        </li>
+        <li class=" nav-item">
+            <a href="icons.html"><i class="ft-droplet"></i><span class="menu-title" data-i18n="">Icons</span></a>
+        </li>
+        <li class=" nav-item">
+            <a href="cards.html"><i class="ft-layers"></i><span class="menu-title" data-i18n="">Cards</span></a>
+        </li>
+        <li class=" nav-item">
+            <a href="buttons.html"><i class="ft-box"></i><span class="menu-title" data-i18n="">Buttons</span></a>
+        </li>
+        <li class=" nav-item">
+            <a href="typography.html"><i class="ft-bold"></i><span class="menu-title" data-i18n="">Typography</span></a>
+        </li>
+        <li class=" nav-item">
+            <a href="tables.html"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">Tables</span></a>
+        </li>
+        <li class=" nav-item">
+            <a href="form-elements.html"><i class="ft-layout"></i><span class="menu-title" data-i18n="">Form Elements</span></a>
+        </li>
+        <li class=" nav-item">
+            <a href="https://themeselection.com/demo/chameleon-admin-template/documentation"><i class="ft-book"></i><span class="menu-title" data-i18n="">Documentation</span></a>
+        </li>
+    </ul>
+ *@
+
+    <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+        @foreach (var item in Model.Where(m => m.ItemLevel == 1).OrderBy(n => n.ItemOrder))
+        {
+            var Pid = item.AdminMenuId;
+            var Smenu = Model.Where(p => p.ParentLevel == Pid).OrderBy(p => p.ItemOrder).ToList();
+            <li class="nav-item">
+                <a class="" data-bs-target="#@item.ItemTarget" data-bs-toggle="collapse" href="/Admin/@item.ControllerName/@item.ActionName">
+                    <i class="ft-layout"></i><span>@item.ItemName</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="@item.IdName" class=" " data-bs-parent="#sidebar-nav">
+                    @foreach (var smn in Smenu)
+                    {
+                        <li class="nav-item">
+                            <a href="/Admin/@smn.ControllerName/@smn.ActionName">
+                                <i class="bi bi-circle"></i><span>@smn.ItemName</span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </li>
+        }
+    </ul>
+
+
+</div>
