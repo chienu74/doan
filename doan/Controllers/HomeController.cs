@@ -1,6 +1,8 @@
 ﻿using doan.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Drawing.Printing;
+using System.Linq;
 
 namespace doan.Controllers
 {
@@ -40,22 +42,17 @@ namespace doan.Controllers
             return View(blog);
         }
         [Route("/list-{slug}-{id:int}.html", Name ="List")]
-        public IActionResult List(int? id,string slug)
+        public IActionResult List(int? id)
         {
-            /*if(slug == "home")
-            {
-                return View("Index");
-            }*/
-          
-
             if (id == null)
             {
                 return NotFound();
             }
             var list = _context.PostMenus
                 .Where(m => (m.MenuId == id) && (m.IsActive == true))
-                .Take(6).ToList();
-            if(list == null)
+                .ToList();
+           
+            if (list == null)
             {
                 return NotFound();
             }

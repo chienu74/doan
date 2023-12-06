@@ -13,5 +13,9 @@ namespace doan.Utilities
         {
             return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
+        public static string getShortCurrentDate()
+        {
+            return DateTime.Now.ToString("dd/MM/yyyy");   
+        }
     }
 }

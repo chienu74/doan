@@ -1,0 +1,65 @@
+﻿@using doan.Models;
+@* @model IList<Menu> *@
+@model IEnumerable<doan.Models.Category>
+
+
+<div class="app-wrapper">
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="container-xl">
+            <p>
+                <a type="buton" class="btn btn-success" asp-area="Admin" asp-controller="Category" asp-action="Create">
+                    <i class="bi bi-file-earmark-text me-1"></i>
+                    Thêm menu
+                </a>
+            </p>
+            <div class="content-body">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>#</th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.Title)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.Description)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.CreatedBy)
+                            </th>
+                            <th scope="col">
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int i = 0;
+                        }
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@(++i)</td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedBy)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.CategoryId" class="btn mr-1 mb-1 btn-success">Edit</a>
+                                    <a asp-action="Delete" asp-route-id="@item.CategoryId" class="btn mr-1 mb-1 btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

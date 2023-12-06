@@ -7,6 +7,7 @@ namespace doan.Models
     [Table("tb_Blog")]
     public class Blog
     {
+        [Key]
         public int BlogId { get; set; }
 
         public string? Title { get; set; }
