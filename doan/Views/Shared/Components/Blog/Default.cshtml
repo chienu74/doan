@@ -12,7 +12,7 @@
         <div class="row">
             @foreach(var item in Model)
             {
-                string url = Functions.TitleSlugGeneration("blog", item.Alias, item.BlogId);
+                string url = Functions.TitleSlugGeneration("blog", item.Title, item.BlogId);
                 <div class="col-md-6">
                     <div class="blog-item">
                         <div class="blog-img">

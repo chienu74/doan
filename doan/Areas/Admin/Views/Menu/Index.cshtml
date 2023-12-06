@@ -3,18 +3,19 @@
 @model IEnumerable<doan.Models.Menu>
 
 
-<div class="app-content content">
-    <div class="content-wrapper">
-        <p>
-            <a type="buton" class="btn btn-success" asp-area="Admin" asp-controller="Menu" asp-action="Create">
-                <i class="bi bi-file-earmark-text me-1"></i>
-                Thêm menu
-            </a>
-        </p>
-        <div class="content-body">
+<div class="app-wrapper">
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="container-xl">
+            <p>
+                <a type="buton" class="btn btn-success" asp-area="Admin" asp-controller="Menu" asp-action="Create">
+                    <i class="bi bi-file-earmark-text me-1"></i>
+                    Thêm menu
+                </a>
+            </p>
             <table class="table">
                 <thead class="thead-dark">
                     <tr>
+                        <th>#</th>
                         <th scope="col">
                             @Html.DisplayNameFor(model => model.MenuName)
                         </th>
@@ -42,9 +43,13 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @{
+                        int i = 0;
+                    }
                     @foreach (var item in Model)
                     {
                         <tr>
+                            <td>@(++i)</td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.MenuName)
                             </td>
@@ -67,16 +72,15 @@
                                 @Html.DisplayFor(modelItem => item.IsActive)
                             </td>
                             <td>
-                                <a asp-action="Edit" asp-route-id="@item.MenuId"   class="btn mr-1 mb-1 btn-success">Edit</a>
+                                <a asp-action="Edit" asp-route-id="@item.MenuId" class="btn mr-1 mb-1 btn-success">Edit</a>
                                 <a asp-action="Delete" asp-route-id="@item.MenuId" class="btn mr-1 mb-1 btn-danger">Delete</a>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
+
         </div>
     </div>
 </div>
-
-
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using doan.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using doan.Models;
 
 namespace doan.Areas.Admin.Controllers
 {
@@ -48,18 +47,18 @@ namespace doan.Areas.Admin.Controllers
         }
         public IActionResult Create()
         {
-            var mnList = (from m in _context.Blogs
+            var catList = (from m in _context.Categories
                           select new SelectListItem()
                           {
                               Text = m.Title,
-                              Value = m.BlogId.ToString()
+                              Value = m.CategoryId.ToString()
                           }).ToList();
-            mnList.Insert(0, new SelectListItem()
+            catList.Insert(0, new SelectListItem()
             {
                 Text = "----Select----",
                 Value = "0"
             });
-            ViewBag.mnList = mnList;
+            ViewBag.catList = catList;
             return View();
         }
         [HttpPost]
@@ -86,18 +85,18 @@ namespace doan.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var mnList = (from m in _context.Blogs
+            var catList = (from m in _context.Blogs
                           select new SelectListItem()
                           {
                               Text = m.Title,
                               Value = m.BlogId.ToString()
                           }).ToList();
-            mnList.Insert(0, new SelectListItem()
+            catList.Insert(0, new SelectListItem()
             {
                 Text = "----Select----",
                 Value = string.Empty
             });
-            ViewBag.mnList = mnList;
+            ViewBag.catList = catList;
             return View(mn);
         }
         [HttpPost]
