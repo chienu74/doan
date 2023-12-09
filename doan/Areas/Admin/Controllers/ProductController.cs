@@ -9,10 +9,10 @@ namespace doan.Areas.Admin.Controllers
 {
     [Area("Admin")]
 
-    public class BlogController : Controller
+    public class ProductController : Controller
     {
         private readonly DataContext _context;
-        public BlogController(DataContext context)
+        public ProductController(DataContext context)
         {
             _context = context;
         }
@@ -20,8 +20,9 @@ namespace doan.Areas.Admin.Controllers
         {
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
             var pageSize = 10;
-            var blList = _context.Blogs.OrderBy(m => m.BlogId).ToPagedList(pageNumber,pageSize);
-            return View(blList);
+
+            var prdList = _context.Products.OrderBy(m => m.ProductId).ToPagedList(pageNumber, pageSize);
+            return View(prdList);
         }
         //
         public IActionResult Delete(int? id)
@@ -30,53 +31,53 @@ namespace doan.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var mn = _context.Blogs.Find(id);
-            if (mn == null)
+            var prd = _context.Products.Find(id);
+            if (prd == null)
             {
                 return NotFound();
             }
-            return View(mn);
+            return View(prd);
         }
-        [HttpPost]
 
+        [HttpPost, ActionName("Delete")]
         public IActionResult Delete(int id)
         {
-            var deleMenu = _context.Blogs.Find(id);
-            if (deleMenu == null)
+            var deleProcduct = _context.Products.Find(id);
+            if (deleProcduct == null)
             {
                 return NotFound();
             }
-            _context.Blogs.Remove(deleMenu);
+            _context.Products.Remove(deleProcduct);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
         public IActionResult Create()
         {
-            var catList = (from m in _context.Categories
+            var prdcatList = (from m in _context.ProductCategories
                            select new SelectListItem()
                            {
                                Text = m.Title,
-                               Value = m.CategoryId.ToString()
+                               Value = m.CategoryProductId.ToString()
                            }).ToList();
-            catList.Insert(0, new SelectListItem()
+            prdcatList.Insert(0, new SelectListItem()
             {
                 Text = "----Select----",
                 Value = "0"
             });
-            ViewBag.catList = catList;
+            ViewBag.prdcatList = prdcatList;
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Blog bl)
+        public IActionResult Create(Product prd)
         {
             if (ModelState.IsValid)
             {
-                _context.Blogs.Add(bl);
+                _context.Products.Add(prd);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(bl);
+            return View(prd);
         }
 
         public IActionResult Edit(int? id)
@@ -85,16 +86,16 @@ namespace doan.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var mn = _context.Blogs.Find(id);
+            var mn = _context.Products.Find(id);
             if (mn == null)
             {
                 return NotFound();
             }
-            var catList = (from m in _context.Categories
+            var catList = (from m in _context.ProductCategories
                            select new SelectListItem()
                            {
                                Text = m.Title,
-                               Value = m.CategoryId.ToString()
+                               Value = m.CategoryProductId.ToString()
                            }).ToList();
             catList.Insert(0, new SelectListItem()
             {
@@ -106,11 +107,11 @@ namespace doan.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Blog mn)
+        public IActionResult Edit(Product mn)
         {
             if (ModelState.IsValid)
             {
-                _context.Blogs.Update(mn);
+                _context.Products.Update(mn);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }

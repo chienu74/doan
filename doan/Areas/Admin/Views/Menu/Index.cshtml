@@ -1,8 +1,11 @@
-﻿@using doan.Models;
-@* @model IList<Menu> *@
-@model IEnumerable<doan.Models.Menu>
-
-
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Mvc.Common;
+@model IPagedList<Menu>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
 <div class="app-wrapper">
     <div class="app-content pt-3 p-md-3 p-lg-4">
         <div class="container-xl">
@@ -16,30 +19,14 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>#</th>
-                        <th scope="col">
-                            @Html.DisplayNameFor(model => model.MenuName)
-                        </th>
-                        <th scope="col">
-                            @Html.DisplayNameFor(model => model.Description)
-                        </th>
-                        <th scope="col">
-                            @Html.DisplayNameFor(model => model.Levels)
-                        </th>
-                        <th scope="col">
-                            @Html.DisplayNameFor(model => model.ParentId)
-                        </th>
-                        <th scope="col">
-                            @Html.DisplayNameFor(model => model.Position)
-                        </th>
-                        <th scope="col">
-                            @Html.DisplayNameFor(model => model.CreatedBy)
-                        </th>
-                        <th scope="col">
-                            @Html.DisplayNameFor(model => model.IsActive)
-                        </th>
-                        <th scope="col">
-
-                        </th>
+                        <th scope="col">Tên menu</th>
+                        <th scope="col">Miêu tả</th>
+                        <th scope="col">Bậc menu</th>
+                        <th scope="col">Menu Cha</th>
+                        <th scope="col">Thứ tự</th>
+                        <th scope="col">Tạo bởi</th>
+                        <th scope="col">Ẩn hiện</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -79,8 +66,20 @@
                     }
                 </tbody>
             </table>
-
+            @Html.PagedListPager(Model, page => Url.Action("index", new { page = page }), new PagedListRenderOptions()
+            {
+            ActiveLiElementClass = "active",
+            PageClasses = new[]{ "page-link"},
+            LiElementClasses=new[] { "page-item" },
+            UlElementClasses = new[] { "pagination", "justify-content-center"},
+            })
         </div>
     </div>
 </div>
 
+
+<script>
+    $(document).ready(function () {
+        $('ul.pagination > li.disabled > a').addClass('page-link');
+    });
+</script>

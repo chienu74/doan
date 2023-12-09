@@ -14,6 +14,6 @@ namespace doan.Models.ho
         public int? ProductId { get; set; }
         public bool IsActive { get; set; }
 
-        public virtual TbProduct? Product { get; set; }
+        public virtual Product? Product { get; set; }
     }
 }

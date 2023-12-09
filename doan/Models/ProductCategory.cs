@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace doan.Models.ho
+namespace doan.Models
 {
-    public partial class TbProductCategory
+    [Table("tb_ProductCategory")]
+    public class ProductCategory
     {
-        public TbProductCategory()
-        {
-            TbProducts = new HashSet<Product>();
-        }
-
+        [Key]
         public int CategoryProductId { get; set; }
         public string? Title { get; set; }
         public string? Alias { get; set; }
@@ -21,7 +18,5 @@ namespace doan.Models.ho
         public DateTime? ModifiedDate { get; set; }
         public string? ModifiedBy { get; set; }
         public bool? IsActive { get; set; }
-
-        public virtual ICollection<Product> TbProducts { get; set; }
     }
 }

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace doan.Models.ho
+namespace doan.Models
 {
-    public partial class Product
+    [Table("tb_Product")]
+    public class Product
     {
-        public Product()
-        {
-            TbDiscounts = new HashSet<TbDiscount>();
-            TbProductReviews = new HashSet<TbProductReview>();
-        }
-
+        [Key]
         public int ProductId { get; set; }
         public string? Title { get; set; }
         public string? Alias { get; set; }
@@ -30,8 +26,5 @@ namespace doan.Models.ho
         public int? UnitInStock { get; set; }
         public bool? IsActive { get; set; }
 
-        public virtual TbProductCategory? CategoryProduct { get; set; }
-        public virtual ICollection<TbDiscount> TbDiscounts { get; set; }
-        public virtual ICollection<TbProductReview> TbProductReviews { get; set; }
     }
 }

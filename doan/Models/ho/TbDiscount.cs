@@ -16,7 +16,7 @@ namespace doan.Models.ho
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
-        public virtual TbProduct? Product { get; set; }
+        public virtual Product? Product { get; set; }
         public virtual ICollection<TbOrderDetail> TbOrderDetails { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using doan.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Drawing.Printing;
 using System.Linq;
@@ -25,38 +26,6 @@ namespace doan.Controllers
         public IActionResult Privacy()
         {
             return View();
-        }
-        
-        [Route("/blog-{slug}-{id:long}.html",Name="Details")]
-        public IActionResult Details(long? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var blog = _context.Blogs.FirstOrDefault(m => (m.BlogId == id) &&(m.IsActive ==true));
-            if (blog == null)
-            {
-                return NotFound();
-            }
-            return View(blog);
-        }
-        [Route("/list-{slug}-{id:int}.html", Name ="List")]
-        public IActionResult List(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var list = _context.PostMenus
-                .Where(m => (m.MenuId == id) && (m.IsActive == true))
-                .ToList();
-           
-            if (list == null)
-            {
-                return NotFound();
-            }
-            return View(list);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

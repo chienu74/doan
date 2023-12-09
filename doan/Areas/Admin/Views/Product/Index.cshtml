@@ -1,7 +1,7 @@
 ﻿@using X.PagedList;
 @using X.PagedList.Mvc.Core;
 @using X.PagedList.Mvc.Common;
-@model IPagedList<doan.Models.Blog>
+@model IPagedList<doan.Models.Product>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -26,6 +26,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Ảnh</th>
                             <th scope="col">Tiêu đề</th>
+                            <th scope="col">Nguời sửa</th>
                             <th scope="col">Ẩn hiện</th>
                             <th scope="col"></th>
                         </tr>
@@ -42,10 +43,11 @@
                                     <img style="height:125px;" src="@item.Image">
                                 </td>
                                 <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ModifiedBy)</td>
                                 <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.BlogId" class="btn mr-1 mb-1 btn-success">Edit</a>
-                                    <a asp-action="Delete" asp-route-id="@item.BlogId" class="btn mr-1 mb-1 btn-danger">Delete</a>
+                                    <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn mr-1 mb-1 btn-success">Edit</a>
+                                    <a asp-action="Delete" asp-route-id="@item.ProductId" class="btn mr-1 mb-1 btn-danger">Delete</a>
                                 </td>
                             </tr>
                         }
@@ -54,7 +56,6 @@
                 @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index",new{page=page}),
                 new X.PagedList.Mvc.Common.PagedListRenderOptions
                 {
-                
                 PageClasses = new[] {"page-link"},
                 LiElementClasses = new[] {"page-item"},
                 UlElementClasses = new[] { "pagination", "flex-row"},
@@ -65,9 +66,35 @@
     </div>
 </div>
 
-
+@* 
 <script>
     $(document).ready(function () {
         $('ul.pagination > li.disabled > a').addClass('page-link');
     });
-</script>
+</script> *@
+ <script>
+    $(document).ready(function () {
+        $(".btn-delete").click(function () {
+            _id = $(this).data("id");
+            if (confirm("Bạn có muốn xóa không")) {
+                $.ajax({
+                    url: "/admin/product/delete",
+                    type: "POST",
+                    data: { id: _id },
+                    success: function (result) {
+                        if (result) {
+                            $("#tr_" + _id).remove();
+                            alert("Thanh cong");
+                            // toastr.success('Xóa thành công');
+                        }
+                        else {
+                            alert("khong Thanh cong");
+                            toastr.error('Xóa không thành công');
+                        }
+                    }
+                })
+            }
+
+        });
+    })
+</script> 

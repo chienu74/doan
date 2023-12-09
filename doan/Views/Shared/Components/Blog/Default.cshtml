@@ -1,8 +1,26 @@
-﻿
-@using doan.Models;
+﻿@using doan.Models;
 @using doan.Utilities;
-@model IList<Blog>
 
+@model IList<Blog>
+ @{
+   List<BlogComment> blogComment = ViewBag.blogComment;
+}
+ 
+<style>
+    .thugond {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .thugont {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>
 <div class="blog">
     <div class="container">
         <div class="section-header text-center">
@@ -10,32 +28,32 @@
             <h2>Latest From Food Blog</h2>
         </div>
         <div class="row">
-            @foreach(var item in Model)
+            @foreach (var item in Model)
             {
+                @* var commentCount = blogComment.Where(m => m.BlogId == item.BlogId); *@
                 string url = Functions.TitleSlugGeneration("blog", item.Title, item.BlogId);
                 <div class="col-md-6">
                     <div class="blog-item">
                         <div class="blog-img">
-                            <img src="@item.Image" alt="Blog">
+                            <img style="width:100%;height:400px" src="@item.Image" alt="Blog">
                         </div>
                         <div class="blog-content">
-                            <h2 class="blog-title">@item.Title</h2>
+                            <h2 class="blog-title thugont">@item.Title</h2>
                             <div class="blog-meta">
                                 <p><i class="far fa-user"></i>@item.CreatedBy</p>
                                 <p><i class="far fa-list-alt"></i>Food</p>
-                                <p><i class="far fa-calendar-alt"></i>@item.CreatedDate.Value.ToString("dd-MM-yyyy")</p>
-                                <p><i class="far fa-comments"></i>10</p>
+                                <p><i class="far fa-calendar-alt"></i>@item.CreatedDate.ToString("dd-MM-yyyy")</p>
+                                <p><i class="far fa-comments"></i>@* @blogComment.Count() *@</p>
                             </div>
                             <div class="blog-text">
-                                <p>
+                                <p class="thugond">
                                     @item.Description
                                 </p>
-                                <a class="btn custom-btn" href="/@url">Read More</a>
+                                <a class="btn custom-btn" href="/@url">Đọc thêm</a>
                             </div>
                         </div>
                     </div>
                 </div>
-
             }
         </div>
     </div>
