@@ -13,5 +13,6 @@ namespace doan.Models
         public DbSet<Category> Categories { get; set; }
         public DbSet<View_Post_Menu> PostMenus { get; set; }
         public DbSet<AdminMenu> AdminMenus { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
     } 
 }
