@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using doan.Models;
+using Microsoft.EntityFrameworkCore;
+using doan.Areas.Admin.Models;
+using X.PagedList;
 
 namespace doan.Areas.Admin.Controllers
 {
@@ -13,10 +16,12 @@ namespace doan.Areas.Admin.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(int? page)
         {
-            var mnList = _context.Blogs.OrderBy(m => m.BlogId).ToList();
-            return View(mnList);
+            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
+            var pageSize = 10;
+            var blList = _context.Blogs.OrderBy(m => m.BlogId).ToPagedList(pageNumber,pageSize);
+            return View(blList);
         }
         //
         public IActionResult Delete(int? id)
@@ -48,11 +53,11 @@ namespace doan.Areas.Admin.Controllers
         public IActionResult Create()
         {
             var catList = (from m in _context.Categories
-                          select new SelectListItem()
-                          {
-                              Text = m.Title,
-                              Value = m.CategoryId.ToString()
-                          }).ToList();
+                           select new SelectListItem()
+                           {
+                               Text = m.Title,
+                               Value = m.CategoryId.ToString()
+                           }).ToList();
             catList.Insert(0, new SelectListItem()
             {
                 Text = "----Select----",
@@ -63,15 +68,15 @@ namespace doan.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Blog mn)
+        public IActionResult Create(Blog bl)
         {
             if (ModelState.IsValid)
             {
-                _context.Blogs.Add(mn);
+                _context.Blogs.Add(bl);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(mn);
+            return View(bl);
         }
 
         public IActionResult Edit(int? id)
@@ -85,12 +90,12 @@ namespace doan.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var catList = (from m in _context.Blogs
-                          select new SelectListItem()
-                          {
-                              Text = m.Title,
-                              Value = m.BlogId.ToString()
-                          }).ToList();
+            var catList = (from m in _context.Categories
+                           select new SelectListItem()
+                           {
+                               Text = m.Title,
+                               Value = m.CategoryId.ToString()
+                           }).ToList();
             catList.Insert(0, new SelectListItem()
             {
                 Text = "----Select----",

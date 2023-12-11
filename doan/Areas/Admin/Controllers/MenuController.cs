@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using doan.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using X.PagedList;
 
 namespace doan.Areas.Admin.Controllers
 {
@@ -12,9 +13,11 @@ namespace doan.Areas.Admin.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(int? page)
         {
-            var mnList = _context.Menus.OrderBy(m=>m.MenuId).ToList();
+            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
+            var pageSize = 5;
+            var mnList = _context.Menus.OrderBy(m=>m.MenuId).ToPagedList(pageNumber,pageSize);
             return View(mnList);
         }
         //

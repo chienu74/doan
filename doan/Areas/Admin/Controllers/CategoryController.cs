@@ -25,23 +25,23 @@ namespace doan.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var mn = _context.Menus.Find(id);
-            if (mn == null)
+            var cat = _context.Categories.Find(id);
+            if (cat == null)
             {
                 return NotFound();
             }
-            return View(mn);
+            return View(cat);
         }
         [HttpPost]
 
         public IActionResult Delete(int id)
         {
-            var deleMenu = _context.Menus.Find(id);
-            if (deleMenu == null)
+            var deleCat = _context.Categories.Find(id);
+            if (deleCat == null)
             {
                 return NotFound();
             }
-            _context.Menus.Remove(deleMenu);
+            _context.Categories.Remove(deleCat);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -80,36 +80,24 @@ namespace doan.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var mn = _context.Menus.Find(id);
-            if (mn == null)
+            var cat = _context.Categories.Find(id);
+            if (cat == null)
             {
                 return NotFound();
             }
-            var mnList = (from m in _context.Menus
-                          select new SelectListItem()
-                          {
-                              Text = m.MenuName,
-                              Value = m.MenuId.ToString()
-                          }).ToList();
-            mnList.Insert(0, new SelectListItem()
-            {
-                Text = "----Select----",
-                Value = string.Empty
-            });
-            ViewBag.mnList = mnList;
-            return View(mn);
+            return View(cat);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Menu mn)
+        public IActionResult Edit(Category cat)
         {
             if (ModelState.IsValid)
             {
-                _context.Menus.Update(mn);
+                _context.Categories.Update(cat);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(mn);
+            return View(cat);
         }
     }
 }

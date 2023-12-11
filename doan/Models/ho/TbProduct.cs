@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace doan.Models.ho
 {
-    public partial class TbProduct
+    public partial class Product
     {
-        public TbProduct()
+        public Product()
         {
             TbDiscounts = new HashSet<TbDiscount>();
             TbProductReviews = new HashSet<TbProductReview>();

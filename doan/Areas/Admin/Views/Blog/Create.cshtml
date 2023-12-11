@@ -47,8 +47,12 @@
 
 
                 <div class="form-group d-none">
+                    <input asp-for="MenuID" class="form-control" value="7" />
+                </div>
+                <div class="form-group d-none">
                     <input asp-for="CreatedBy" class="form-control" value="Admin" /><!--sau lấy uses name admin vô-->
                 </div>
+
                 <div class="form-group d-none">
                     <input asp-for="CreatedDate" class="form-control" value="@Functions.getCurrentDate()" />
                 </div>
@@ -75,8 +79,6 @@
         </div>
     </div>
 </div>
-
-
 
 @{
     var summerNote = new doan.Areas.Admin.Models.SummerNote("#Detail");

@@ -7,7 +7,7 @@ namespace doan.Models.ho
     {
         public TbProductCategory()
         {
-            TbProducts = new HashSet<TbProduct>();
+            TbProducts = new HashSet<Product>();
         }
 
         public int CategoryProductId { get; set; }
@@ -22,6 +22,6 @@ namespace doan.Models.ho
         public string? ModifiedBy { get; set; }
         public bool? IsActive { get; set; }
 
-        public virtual ICollection<TbProduct> TbProducts { get; set; }
+        public virtual ICollection<Product> TbProducts { get; set; }
     }
 }

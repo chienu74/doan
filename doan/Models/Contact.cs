@@ -18,4 +18,8 @@ namespace doan.Models
         public DateTime? ModifiedDate { get; set; }
         public string? ModifiedBy { get; set; }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 83d9682a377a16f123a4e407ddb7433f925a74a4

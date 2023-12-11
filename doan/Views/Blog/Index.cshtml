@@ -1,0 +1,91 @@
+﻿@using doan.Utilities;
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Mvc.Common;
+@model IPagedList<Blog>
+@{
+    List<BlogComment> listComment = ViewBag.blogcomment;
+}
+<style>
+    .thugond {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .thugont {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>
+<!-- Page Header Start -->
+<div class="page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>Food Blog</h2>
+            </div>
+            <div class="col-12">
+                <a href="">Home</a>
+                <a href="">Blog</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+<!-- Blog Start -->
+<div class="blog">
+    <div class="container">
+        <div class="section-header text-center">
+            <p>Food Blog</p>
+            <h2>Latest From Food Blog</h2>
+        </div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                var blogId = item.BlogId;
+                var commentCount = listComment.Where(m => m.BlogId == item.BlogId);
+                string url = Functions.TitleSlugGeneration("blog", item.Title, item.BlogId);
+                <div class="col-md-6">
+                    <div class="blog-item">
+                        <div class="blog-img">
+                            <img style="width:100%;height:400px" src="@item.Image" alt="Blog">
+                        </div>
+                        <div class="blog-content">
+                            <h2 class="blog-title thugont">@item.Title</h2>
+                            <div class="blog-meta">
+                                <p><i class="far fa-user"></i>Admin</p>
+                                <p><i class="far fa-list-alt"></i>Food</p>
+                                <p><i class="far fa-calendar-alt"></i>@item.CreatedDate.ToString("dd/MM/yyyy")</p>
+                                <p><i class="far fa-comments"></i> @commentCount.Count()</p>
+                            </div>
+                            <div class="blog-text">
+                                <p class="thugond">
+                                    @item.Description
+                                </p>
+                                <a class="btn custom-btn" href="/@url">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+        <div class="row">
+            <div class="col-12">
+                @Html.PagedListPager(Model, page => Url.Action("index", new { page = page }), new PagedListRenderOptions()
+                {
+                    ActiveLiElementClass = "active",
+                    PageClasses = new[]{ "page-link"},
+                    LiElementClasses=new[] { "page-item" },
+                    UlElementClasses = new[] { "pagination", "justify-content-center"},
+                })
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Blog End -->

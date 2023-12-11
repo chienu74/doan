@@ -11,40 +11,34 @@
 
         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
             <div class="navbar-nav ml-auto">
-                @foreach (var menu in Model.Where(m=>m.Levels==1))
+                @foreach (var menu in Model.Where(m => m.Levels == 1))
                 {
-                    
-                    var Pid = menu.MenuId;
-                    string url = Functions.TitleSlugGeneration("list", menu.Alias, menu.MenuId);
-                    if(!string.IsNullOrEmpty(menu.Link))
-                    {
-                        url = menu.Link;
-                    }
+                    var menuId = menu.MenuId;
+                    var menuChild = Model.Where(m => m.ParentId == menuId);
 
-                    var Smenu = Model.Where(p => p.ParentId == Pid).ToList();
-
-                    @if (Smenu.Count == 0)
+                    if (menuChild.Count() == 0)
                     {
-                        
-                        <a href="/@url" class="nav-item nav-link ">@menu.MenuName</a>
-                        
+                        <a href="/@menu.Alias" class="nav-item nav-link ">@menu.MenuName</a>
                     }
                     else
                     {
                         <div class="nav-item dropdown">
-                            <a href="/@url" class="nav-link dropdown-toggle" data-toggle="dropdown">@menu.MenuName</a>
+                            <a href="/@menu.Alias" class="nav-link dropdown-toggle" data-toggle="dropdown">@menu.MenuName</a>
                             <div class="dropdown-menu">
-                                @foreach(var smn in Smenu){
-                                    string url1 = Functions.TitleSlugGeneration("list", smn.Alias, smn.MenuId);
-
-                                    if (!string.IsNullOrEmpty(smn.Link))
+                                @foreach (var itemchild in menuChild)
+                                {
+                                    if (!string.IsNullOrEmpty(itemchild.Link))
                                     {
-                                        url1 = smn.Link;
+                                        <a href="@itemchild.Link" class="dropdown-item">@itemchild.MenuName</a>
                                     }
-                                    <a href="/@url1" class="dropdown-item">@smn.MenuName</a>
+                                    else
+                                    {
+                                        <a href="/@itemchild.Alias" class="dropdown-item">@itemchild.MenuName</a>
+                                    }
                                 }
                             </div>
                         </div>
+
                     }
                 }
             </div>

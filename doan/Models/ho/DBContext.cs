@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace doan.Models.ho
 {
-    public partial class fastfood_version2Context : DbContext
+    public partial class DBContext : DbContext
     {
-        public fastfood_version2Context()
+        public DBContext()
         {
         }
 
-        public fastfood_version2Context(DbContextOptions<fastfood_version2Context> options)
+        public DBContext(DbContextOptions<DBContext> options)
             : base(options)
         {
         }
@@ -29,7 +29,7 @@ namespace doan.Models.ho
         public virtual DbSet<TbOrder> TbOrders { get; set; } = null!;
         public virtual DbSet<TbOrderDetail> TbOrderDetails { get; set; } = null!;
         public virtual DbSet<TbOrderStatus> TbOrderStatuses { get; set; } = null!;
-        public virtual DbSet<TbProduct> TbProducts { get; set; } = null!;
+        public virtual DbSet<Product> TbProducts { get; set; } = null!;
         public virtual DbSet<TbProductCategory> TbProductCategories { get; set; } = null!;
         public virtual DbSet<TbProductReview> TbProductReviews { get; set; } = null!;
         public virtual DbSet<TbRole> TbRoles { get; set; } = null!;
@@ -353,7 +353,7 @@ namespace doan.Models.ho
                 entity.Property(e => e.Name).HasMaxLength(50);
             });
 
-            modelBuilder.Entity<TbProduct>(entity =>
+            modelBuilder.Entity<Product>(entity =>
             {
                 entity.HasKey(e => e.ProductId);
 
