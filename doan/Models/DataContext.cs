@@ -20,6 +20,10 @@ namespace doan.Models
 
         public DbSet<View_Post_Menu> PostMenus { get; set; }
         public DbSet<AdminMenu> AdminMenus { get; set; }
+<<<<<<< HEAD
         public DbSet<Account> Accounts { get; set; }
+=======
+        public DbSet<Contact> Contacts { get; set; }
+>>>>>>> 83d9682a377a16f123a4e407ddb7433f925a74a4
     } 
 }
