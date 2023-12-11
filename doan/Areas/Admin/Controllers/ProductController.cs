@@ -4,6 +4,7 @@ using doan.Models;
 using Microsoft.EntityFrameworkCore;
 using doan.Areas.Admin.Models;
 using X.PagedList;
+using doan.Utilities;
 
 namespace doan.Areas.Admin.Controllers
 {
@@ -18,6 +19,8 @@ namespace doan.Areas.Admin.Controllers
         }
         public IActionResult Index(int? page)
         {
+            if (!Functions.IsLogin())
+                return RedirectToAction("Index", "Login");
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
             var pageSize = 10;
 
@@ -27,6 +30,8 @@ namespace doan.Areas.Admin.Controllers
         //
         public IActionResult Delete(int? id)
         {
+            if (!Functions.IsLogin())
+                return RedirectToAction("Index", "Login");
             if (id == null || id == 0)
             {
                 return NotFound();
@@ -53,6 +58,8 @@ namespace doan.Areas.Admin.Controllers
         }
         public IActionResult Create()
         {
+            if (!Functions.IsLogin())
+                return RedirectToAction("Index", "Login");
             var prdcatList = (from m in _context.ProductCategories
                            select new SelectListItem()
                            {
@@ -82,6 +89,8 @@ namespace doan.Areas.Admin.Controllers
 
         public IActionResult Edit(int? id)
         {
+            if (!Functions.IsLogin())
+                return RedirectToAction("Index", "Login");
             if (id == null || id == 0)
             {
                 return NotFound();

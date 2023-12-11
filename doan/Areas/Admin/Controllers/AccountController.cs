@@ -42,6 +42,8 @@ namespace doan.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
+            if (!Functions.IsLogin())
+                return RedirectToAction("Index", "Login");
             int id = Functions._AccountID;
             var acc = _context.Accounts.Find(id);
             if (acc == null)
