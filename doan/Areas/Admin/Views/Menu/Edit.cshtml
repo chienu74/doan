@@ -60,7 +60,7 @@
                     <input asp-for="ModifiedDate" class="form-control" value="@Functions.getCurrentDate()" />
                 </div>
                 <div class="form-group d-none">
-                    <input asp-for="ModifiedBy" class="form-control" value="name admin modified" />
+                    <input asp-for="ModifiedBy" class="form-control" value="@Functions._UserName" />
                 </div>
 
                 <div class="form-group">

@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using doan.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using doan.Utilities;
+using X.PagedList;
 
 namespace doan.Areas.Admin.Controllers
 {
@@ -13,14 +14,32 @@ namespace doan.Areas.Admin.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(int? page, string searchString)
         {
-            var mnList = _context.Categories.OrderBy(m => m.CategoryId).ToList();
-            return View(mnList);
+            if (!Functions.IsLogin())
+                return RedirectToAction("Index", "Login");
+            var pageNumber = page ?? 1;
+            var pageSize = 10;
+            IQueryable<doan.Models.Category> categories = _context.Categories.OrderByDescending(m => m.CategoryId);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                categories = categories.Where(m => m.Title.Contains(searchString));
+            }
+
+            IOrderedQueryable<doan.Models.Category> orderedMenus = categories.OrderByDescending(m => m.CategoryId);
+
+            var pagedMenus = orderedMenus.ToPagedList(pageNumber, pageSize);
+            ViewBag.SearchString = searchString;
+            ViewBag.controllerName = "Menu";
+
+            return View(pagedMenus);
         }
         //
         public IActionResult Delete(int? id)
         {
+            if (!Functions.IsLogin())
+                return RedirectToAction("Index", "Login");
             if (id == null || id == 0)
             {
                 return NotFound();
@@ -65,6 +84,8 @@ namespace doan.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Category cat)
         {
+            if (!Functions.IsLogin())
+                return RedirectToAction("Index", "Login");
             if (ModelState.IsValid)
             {
                 _context.Categories.Add(cat);
@@ -76,6 +97,8 @@ namespace doan.Areas.Admin.Controllers
 
         public IActionResult Edit(int? id)
         {
+            if (!Functions.IsLogin())
+                return RedirectToAction("Index", "Login");
             if (id == null || id == 0)
             {
                 return NotFound();

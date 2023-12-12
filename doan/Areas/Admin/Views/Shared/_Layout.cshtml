@@ -37,10 +37,11 @@
                             <i class="search-mobile-trigger-icon fa-solid fa-magnifying-glass"></i>
                         </div><!--//col-->
                         <div class="app-search-box col">
-                            <form class="app-search-form">
-                                <input type="text" placeholder="Search..." name="search" class="form-control search-input">
+                            <form action="/Admin/@ViewBag.controllerName" class="app-search-form" method="get">
+                                <input id="searchString" type="text" placeholder="Search..." name="searchString" class="form-control search-input">
                                 <button type="submit" class="btn search-btn btn-primary" value="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </form>
+
                         </div><!--//app-search-box-->
 
                         <div class="app-utilities col-auto">
@@ -145,7 +146,7 @@
                             <div class="app-utility-item app-user-dropdown dropdown">
                                 <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown"
                                    href="#" role="button" aria-expanded="false">
-                                    <img src="~/admin/assets/images/user.png"
+                                    <img src="@Functions._Avatar"
                                          alt="user profile">@Functions._UserName
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
@@ -155,7 +156,7 @@
                                             <span>@Functions._Email</span>
                                         </a>
                                     </li>
-                                    <li><a class="dropdown-item" href="account.html">Account</a></li>
+                                    <li><a class="dropdown-item" href="/Admin/Account">Account</a></li>
                                     <li><a class="dropdown-item" href="settings.html">Settings</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="/Admin/Home/Logout">Log Out</a></li>
@@ -222,6 +223,7 @@
         </div><!--//app-sidepanel-->
     </header><!--//app-header-->
     @RenderBody()
+
     <!-- Javascript -->
     <script src="~/admin/assets/plugins/popper.min.js"></script>
     <script src="~/admin/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
