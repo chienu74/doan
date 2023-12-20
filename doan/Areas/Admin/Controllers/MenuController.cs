@@ -2,6 +2,7 @@
 using doan.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using X.PagedList;
+using doan.Utilities;
 
 namespace doan.Areas.Admin.Controllers
 {
@@ -13,16 +14,32 @@ namespace doan.Areas.Admin.Controllers
         {
             _context = context;
         }
-        public IActionResult Index(int? page)
+        public IActionResult Index(int? page, string searchString)
         {
-            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
-            var pageSize = 5;
-            var mnList = _context.Menus.OrderBy(m=>m.MenuId).ToPagedList(pageNumber,pageSize);
-            return View(mnList);
+            if (!Functions.IsLogin())
+                return RedirectToAction("Index", "Login");
+            var pageNumber = page ?? 1;
+            var pageSize = 10;
+            IQueryable<doan.Models.Menu> menus = _context.Menus.OrderByDescending(m => m.MenuId);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                menus = menus.Where(m => m.MenuName.Contains(searchString));
+            }
+
+            IOrderedQueryable<doan.Models.Menu> orderedMenus = menus.OrderByDescending(m => m.MenuId);
+
+            var pagedMenus = orderedMenus.ToPagedList(pageNumber, pageSize);
+            ViewBag.SearchString = searchString;
+            ViewBag.controllerName = "Menu";
+
+            return View(pagedMenus);
         }
         //
         public IActionResult Delete(int? id)
         {
+            if (!Functions.IsLogin())
+                return RedirectToAction("Index", "Login");
             if (id == null || id == 0)
             {
                 return NotFound();
@@ -49,6 +66,8 @@ namespace doan.Areas.Admin.Controllers
         }
         public IActionResult Create()
         {
+            if (!Functions.IsLogin())
+                return RedirectToAction("Index", "Login");
             var mnList = (from m in _context.Menus
                           select new SelectListItem()
                           {
@@ -78,6 +97,8 @@ namespace doan.Areas.Admin.Controllers
         
         public IActionResult Edit(int? id)
         {
+            if (!Functions.IsLogin())
+                return RedirectToAction("Index", "Login");
             if (id == null || id == 0)
             {
                 return NotFound();

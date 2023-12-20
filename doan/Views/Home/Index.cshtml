@@ -1,4 +1,9 @@
-﻿<!-- Carousel Start -->
+﻿@{
+    ViewBag.Active = "Home";
+}
+
+
+<!-- Carousel Start -->
 <div class="carousel">
     <div class="container-fluid">
         <div class="owl-carousel">
@@ -51,7 +56,6 @@
     </div>
 </div>
 <!-- Carousel End -->
-
 <!-- Booking Start -->
 <div class="booking">
     <div class="container">
@@ -729,5 +733,5 @@
 </div>
 <!-- Contact End -->
 <!-- Blog Start -->
-   @await Component.InvokeAsync("Blog") 
+@await Component.InvokeAsync("Blog")
 <!-- Blog End -->

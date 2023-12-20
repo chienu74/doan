@@ -1,5 +1,6 @@
 ﻿@model doan.Models.Blog
 @{
+    ViewBag.Active = "Blog";
     List<BlogComment> blogComment = ViewBag.blogcomment;
     List<Category> category = ViewBag.category;
 }
@@ -15,7 +16,6 @@
             <div class="col-12">
                 <a href="">Home</a>
                 <a href="">Detail</a>
-                @* <a href="">@Html.Raw(Model.Alias)</a> *@
             </div>
         </div>
     </div>
@@ -27,7 +27,6 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="single-content">
-                    @* <img src="@Model.Image" /> *@
                     <h2>@Html.DisplayFor(model=>model.Title)</h2>
                     <p>@Html.Raw(Model.Detail)</p>
                     <p>@Html.Raw(Model.Description)</p>

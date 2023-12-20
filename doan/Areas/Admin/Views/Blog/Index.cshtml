@@ -4,6 +4,7 @@
 @model IPagedList<doan.Models.Blog>
 @{
     ViewData["Title"] = "Index";
+	ViewData["Action"] = "Blog";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 <div class="app-wrapper">
@@ -45,7 +46,9 @@
                                 <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
                                 <td>
                                     <a asp-action="Edit" asp-route-id="@item.BlogId" class="btn mr-1 mb-1 btn-success">Edit</a>
-                                    <a asp-action="Delete" asp-route-id="@item.BlogId" class="btn mr-1 mb-1 btn-danger">Delete</a>
+                                    <form asp-action="Delete" method="post" >
+                                        <input type="submit" asp-route-id="@item.BlogId" class="btn mr-1 mb-1 btn-danger" value="Xóa">
+                                    </form>
                                 </td>
                             </tr>
                         }
@@ -57,7 +60,7 @@
                 
                 PageClasses = new[] {"page-link"},
                 LiElementClasses = new[] {"page-item"},
-                UlElementClasses = new[] { "pagination", "flex-row"},
+                UlElementClasses = new[] { "pagination", "justify-content-center"},
                 })
             </div>
         </div>
@@ -68,6 +71,6 @@
 
 <script>
     $(document).ready(function () {
-        $('ul.pagination > li.disabled > a').addClass('page-link');
+        $('ul.pagination > li.disabled > a').addClass('active');
     });
 </script>

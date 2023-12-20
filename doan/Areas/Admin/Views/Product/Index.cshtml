@@ -4,6 +4,7 @@
 @model IPagedList<doan.Models.Product>
 @{
     ViewData["Title"] = "Index";
+    ViewData["Action"] = "Product";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 <div class="app-wrapper">
@@ -58,7 +59,7 @@
                 {
                 PageClasses = new[] {"page-link"},
                 LiElementClasses = new[] {"page-item"},
-                UlElementClasses = new[] { "pagination", "flex-row"},
+                UlElementClasses = new[] { "pagination", "justify-content-center"},
                 })
             </div>
         </div>

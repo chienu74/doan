@@ -13,12 +13,16 @@
             <div class="navbar-nav ml-auto">
                 @foreach (var menu in Model.Where(m => m.Levels == 1))
                 {
+                    string active = "";
                     var menuId = menu.MenuId;
                     var menuChild = Model.Where(m => m.ParentId == menuId);
-
+                    if(menu.MenuName == ViewBag.Active)
+                    {
+                        active = "active";
+                    }
                     if (menuChild.Count() == 0)
                     {
-                        <a href="/@menu.Alias" class="nav-item nav-link ">@menu.MenuName</a>
+                        <a href="/@menu.Link" class="nav-item nav-link @active">@menu.MenuName</a>
                     }
                     else
                     {
@@ -38,7 +42,6 @@
                                 }
                             </div>
                         </div>
-
                     }
                 }
             </div>

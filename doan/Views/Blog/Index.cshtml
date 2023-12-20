@@ -4,6 +4,7 @@
 @using X.PagedList.Mvc.Common;
 @model IPagedList<Blog>
 @{
+    ViewBag.Active = "Blog";
     List<BlogComment> listComment = ViewBag.blogcomment;
 }
 <style>
