@@ -28,22 +28,21 @@ namespace doan.Areas.Admin.Controllers
             return View(prdList);
         }
         //
-        public IActionResult Delete(int? id)
-        {
-            if (!Functions.IsLogin())
-                return RedirectToAction("Index", "Login");
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            var prd = _context.Products.Find(id);
-            if (prd == null)
-            {
-                return NotFound();
-            }
-            return View(prd);
-        }
+        /*   public IActionResult Delete(int? id)
+           {
 
+               if (id == null || id == 0)
+               {
+                   return NotFound();
+               }
+               var prd = _context.Products.Find(id);
+               if (prd == null)
+               {
+                   return NotFound();
+               }
+               return View(prd);
+           }
+   */
         [HttpPost, ActionName("Delete")]
         public IActionResult Delete(int id)
         {
@@ -54,6 +53,7 @@ namespace doan.Areas.Admin.Controllers
             }
             _context.Products.Remove(deleProcduct);
             _context.SaveChanges();
+            TempData["AlertMessage"] = "Xóa thành công";
             return RedirectToAction("Index");
         }
         public IActionResult Create()
@@ -61,11 +61,11 @@ namespace doan.Areas.Admin.Controllers
             if (!Functions.IsLogin())
                 return RedirectToAction("Index", "Login");
             var prdcatList = (from m in _context.ProductCategories
-                           select new SelectListItem()
-                           {
-                               Text = m.Title,
-                               Value = m.CategoryProductId.ToString()
-                           }).ToList();
+                              select new SelectListItem()
+                              {
+                                  Text = m.Title,
+                                  Value = m.CategoryProductId.ToString()
+                              }).ToList();
             prdcatList.Insert(0, new SelectListItem()
             {
                 Text = "----Select----",
@@ -84,6 +84,7 @@ namespace doan.Areas.Admin.Controllers
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
+            TempData["AlertMessage"] = "Thêm thành công";
             return View(prd);
         }
 
@@ -122,6 +123,7 @@ namespace doan.Areas.Admin.Controllers
             {
                 _context.Products.Update(mn);
                 _context.SaveChanges();
+                TempData["AlertMessage"] = "Sửa thành công";
                 return RedirectToAction("Index");
             }
             return View(mn);

@@ -24,6 +24,7 @@ namespace doan.Controllers
             {
                 _context.Contacts.Add(ct);
                 _context.SaveChanges();
+                TempData["AlertMessage"] = "Thêm thành công";
                 return RedirectToAction("Index");
             }
             return View();

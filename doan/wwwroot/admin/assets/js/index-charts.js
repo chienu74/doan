@@ -211,7 +211,7 @@ var barChartConfig = {
 
 
 // Generate charts on load
-window.addEventListener('load', function(){
+/*window.addEventListener('load', function(){
 	
 	var lineChart = document.getElementById('canvas-linechart').getContext('2d');
 	window.myLine = new Chart(lineChart, lineChartConfig);
@@ -220,5 +220,5 @@ window.addEventListener('load', function(){
 	window.myBar = new Chart(barChart, barChartConfig);
 	
 
-});	
+});	*/
 	

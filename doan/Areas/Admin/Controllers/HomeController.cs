@@ -28,6 +28,13 @@ namespace doan.Areas.Admin.Controllers
             Functions._Email = string.Empty;
             Functions._Message = string.Empty;
             Functions._MessageEmail = string.Empty;
+            var account = _context.Accounts.FirstOrDefault(a => a.AccountId == Functions._AccountID);
+            if (account != null)
+            {
+                account.LastLogin = DateTime.Parse(Functions.getCurrentDate());
+                _context.Update(account);
+                _context.SaveChanges();
+            }
             return RedirectToAction("Index", "Home");
         }
     }

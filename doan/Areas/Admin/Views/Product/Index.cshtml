@@ -7,6 +7,7 @@
     ViewData["Action"] = "Product";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+
 <div class="app-wrapper">
     <div class="app-content pt-3 p-md-3 p-lg-4">
         <div class="container-xl">
@@ -47,8 +48,10 @@
                                 <td>@Html.DisplayFor(modelItem => item.ModifiedBy)</td>
                                 <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn mr-1 mb-1 btn-success">Edit</a>
-                                    <a asp-action="Delete" asp-route-id="@item.ProductId" class="btn mr-1 mb-1 btn-danger">Delete</a>
+                                    <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn mr-1 mb-1 btn-success">Sửa</a>
+                                    <form asp-action="Delete" id="deleteForm">
+                                        <input asp-route-id="@item.ProductId" class="btn mr-1 mb-1 btn-danger" type="submit" onclick="confirmDelete(event)" value="Xóa">
+                                    </form>
                                 </td>
                             </tr>
                         }
@@ -66,36 +69,12 @@
         <br />
     </div>
 </div>
-
-@* 
 <script>
-    $(document).ready(function () {
-        $('ul.pagination > li.disabled > a').addClass('page-link');
-    });
-</script> *@
- <script>
-    $(document).ready(function () {
-        $(".btn-delete").click(function () {
-            _id = $(this).data("id");
-            if (confirm("Bạn có muốn xóa không")) {
-                $.ajax({
-                    url: "/admin/product/delete",
-                    type: "POST",
-                    data: { id: _id },
-                    success: function (result) {
-                        if (result) {
-                            $("#tr_" + _id).remove();
-                            alert("Thanh cong");
-                            // toastr.success('Xóa thành công');
-                        }
-                        else {
-                            alert("khong Thanh cong");
-                            toastr.error('Xóa không thành công');
-                        }
-                    }
-                })
-            }
+    function confirmDelete(event) {
+        event.preventDefault();
+        if (confirm("Bạn có chắc chắn muốn xóa không?")) {
+            document.getElementById("deleteForm").submit();
+        }
+    }
+</script>
 
-        });
-    })
-</script> 

@@ -22,5 +22,6 @@ namespace doan.Components
 */
             return await Task.FromResult((IViewComponentResult)View());
         }
+
     }
 }
