@@ -29,7 +29,6 @@ namespace doan.Areas.Admin.Controllers
         //
      
         [HttpPost]
-
         public IActionResult Delete(int id)
         {
             var deleMenu = _context.Blogs.Find(id);

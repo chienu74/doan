@@ -13,7 +13,6 @@ namespace doan.Models
         
         public DbSet<BlogComment> BlogComments { get; set; }
         public DbSet<Blog> Blogs { get; set; }
-/*        public DbSet<Blog_Category> Blog_Categories { get; set; }*/
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Product> Products { get; set; }
