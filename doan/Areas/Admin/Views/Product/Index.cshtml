@@ -12,13 +12,13 @@
     <div class="app-content pt-3 p-md-3 p-lg-4">
         <div class="container-xl">
             <p>
-                <a type="buton" class="btn btn-success" asp-area="Admin" asp-controller="Blog" asp-action="Create">
+                <a type="buton" class="btn btn-success" asp-area="Admin" asp-controller="Product" asp-action="Create">
                     <i class="bi bi-file-earmark-text me-1"></i>
                     Thêm bài viết
                 </a>
-                <a type="buton" class="btn btn-success" asp-area="Admin" asp-controller="Category" asp-action="Index">
+                <a type="buton" class="btn btn-success" asp-area="Admin" asp-controller="ProductCategory" asp-action="Index">
                     <i class="bi bi-file-earmark-text me-1"></i>
-                    Loại bài viết
+                    Loại sản phẩm
                 </a>
             </p>
             <div class="content-body">
@@ -49,8 +49,9 @@
                                 <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
                                 <td>
                                     <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn mr-1 mb-1 btn-success">Sửa</a>
-                                    <form asp-action="Delete" id="deleteForm">
-                                        <input asp-route-id="@item.ProductId" class="btn mr-1 mb-1 btn-danger" type="submit" onclick="confirmDelete(event)" value="Xóa">
+                                    <form asp-action="Delete" id="deleteForm" method="post">
+                                        <input class="d-none" value="@item.ProductId" name="id">
+                                        <input class="btn mr-1 mb-1 btn-danger" type="submit" value="Xóa" onclick="confirmDelete(event)">
                                     </form>
                                 </td>
                             </tr>
@@ -69,12 +70,5 @@
         <br />
     </div>
 </div>
-<script>
-    function confirmDelete(event) {
-        event.preventDefault();
-        if (confirm("Bạn có chắc chắn muốn xóa không?")) {
-            document.getElementById("deleteForm").submit();
-        }
-    }
-</script>
+
 

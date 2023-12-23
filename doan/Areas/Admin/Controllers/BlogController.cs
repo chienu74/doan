@@ -23,25 +23,11 @@ namespace doan.Areas.Admin.Controllers
                 return RedirectToAction("Index", "Login");
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
             var pageSize = 10;
-            var blList = _context.Blogs.OrderBy(m => m.BlogId).ToPagedList(pageNumber,pageSize);
+            var blList = _context.Blogs.OrderByDescending(m => m.BlogId).ToPagedList(pageNumber,pageSize);
             return View(blList);
         }
         //
-        public IActionResult Delete(int? id)
-        {
-            if (!Functions.IsLogin())
-                return RedirectToAction("Index", "Login");
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            var mn = _context.Blogs.Find(id);
-            if (mn == null)
-            {
-                return NotFound();
-            }
-            return View(mn);
-        }
+     
         [HttpPost]
 
         public IActionResult Delete(int id)
@@ -53,6 +39,7 @@ namespace doan.Areas.Admin.Controllers
             }
             _context.Blogs.Remove(deleMenu);
             _context.SaveChanges();
+            TempData["AlertMessage"] = "Xóa thành công";
             return RedirectToAction("Index");
         }
         public IActionResult Create()
@@ -81,6 +68,7 @@ namespace doan.Areas.Admin.Controllers
             {
                 _context.Blogs.Add(bl);
                 _context.SaveChanges();
+                TempData["AlertMessage"] = "Thêm thành công";
                 return RedirectToAction("Index");
             }
             return View(bl);
@@ -121,6 +109,7 @@ namespace doan.Areas.Admin.Controllers
             {
                 _context.Blogs.Update(mn);
                 _context.SaveChanges();
+                TempData["AlertMessage"] = "Sửa thành công";
                 return RedirectToAction("Index");
             }
             return View(mn);

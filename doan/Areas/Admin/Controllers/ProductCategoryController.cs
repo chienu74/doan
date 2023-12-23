@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using doan.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using X.PagedList;
 using doan.Utilities;
+using X.PagedList;
 
 namespace doan.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class MenuController : Controller
+    public class ProductCategoryController : Controller
     {
         private readonly DataContext _context;
-        public MenuController(DataContext context)
+        public ProductCategoryController(DataContext context)
         {
             _context = context;
         }
@@ -20,32 +20,33 @@ namespace doan.Areas.Admin.Controllers
                 return RedirectToAction("Index", "Login");
             var pageNumber = page ?? 1;
             var pageSize = 10;
-            IQueryable<doan.Models.Menu> menus = _context.Menus.OrderByDescending(m => m.MenuId);
+            IQueryable<doan.Models.ProductCategory> categories = _context.ProductCategories.OrderByDescending(m => m.CategoryProductId);
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                menus = menus.Where(m => m.MenuName.Contains(searchString));
+                categories = categories.Where(m => m.Title.Contains(searchString));
             }
 
-            IOrderedQueryable<doan.Models.Menu> orderedMenus = menus.OrderByDescending(m => m.MenuId);
+            IOrderedQueryable<doan.Models.ProductCategory> orderedMenus = categories.OrderByDescending(m => m.CategoryProductId);
 
             var pagedMenus = orderedMenus.ToPagedList(pageNumber, pageSize);
             ViewBag.SearchString = searchString;
-            ViewBag.controllerName = "Menu";
+            ViewBag.controllerName = "p";
 
             return View(pagedMenus);
         }
         //
-       
+
         [HttpPost]
+
         public IActionResult Delete(int id)
         {
-            var deleMenu = _context.Menus.Find(id);
-            if (deleMenu == null)
+            var deleCat = _context.ProductCategories.Find(id);
+            if (deleCat == null)
             {
                 return NotFound();
             }
-            _context.Menus.Remove(deleMenu);
+            _context.ProductCategories.Remove(deleCat);
             _context.SaveChanges();
             TempData["AlertMessage"] = "Xóa thành công";
             return RedirectToAction("Index");
@@ -54,34 +55,24 @@ namespace doan.Areas.Admin.Controllers
         {
             if (!Functions.IsLogin())
                 return RedirectToAction("Index", "Login");
-            var mnList = (from m in _context.Menus
-                          select new SelectListItem()
-                          {
-                              Text = m.MenuName,
-                              Value = m.MenuId.ToString()
-                          }).ToList();
-            mnList.Insert(0, new SelectListItem()
-            {
-                Text = "----Select----",
-                Value = "0"
-            });
-            ViewBag.mnList = mnList;
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Menu mn)
+        public IActionResult Create(ProductCategory prcat)
         {
+            if (!Functions.IsLogin())
+                return RedirectToAction("Index", "Login");
             if (ModelState.IsValid)
             {
-                _context.Menus.Add(mn);
+                _context.ProductCategories.Add(prcat);
                 _context.SaveChanges();
                 TempData["AlertMessage"] = "Thêm thành công";
                 return RedirectToAction("Index");
             }
-            return View(mn);
+            return View(prcat);
         }
-        
+
         public IActionResult Edit(int? id)
         {
             if (!Functions.IsLogin())
@@ -90,37 +81,25 @@ namespace doan.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var mn = _context.Menus.Find(id);
-            if (mn == null)
+            var cat = _context.ProductCategories.Find(id);
+            if (cat == null)
             {
                 return NotFound();
             }
-            var mnList = (from m in _context.Menus
-                          select new SelectListItem()
-                          {
-                              Text = m.MenuName,
-                              Value = m.MenuId.ToString()
-                          }).ToList();
-            mnList.Insert(0, new SelectListItem()
-            {
-                Text = "----Select----",
-                Value = string.Empty
-            });
-            ViewBag.mnList = mnList;
-            return View(mn);
+            return View(cat);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Menu mn)
+        public IActionResult Edit(ProductCategory cat)
         {
             if (ModelState.IsValid)
             {
-                _context.Menus.Update(mn);
+                _context.ProductCategories.Update(cat);
                 _context.SaveChanges();
                 TempData["AlertMessage"] = "Sửa thành công";
                 return RedirectToAction("Index");
             }
-            return View(mn);
+            return View(cat);
         }
     }
 }

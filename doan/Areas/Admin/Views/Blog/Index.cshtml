@@ -46,8 +46,9 @@
                                 <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
                                 <td>
                                     <a asp-action="Edit" asp-route-id="@item.BlogId" class="btn mr-1 mb-1 btn-success">Edit</a>
-                                    <form asp-action="Delete" method="post" >
-                                        <input type="submit" asp-route-id="@item.BlogId" class="btn mr-1 mb-1 btn-danger" value="Xóa">
+                                    <form asp-action="Delete" method="post" id="deleteForm">
+                                        <input class="d-none" value="@item.BlogId" name="id">
+                                        <input class="btn mr-1 mb-1 btn-danger" type="submit" value="Xóa" onclick="confirmDelete(event)">
                                     </form>
                                 </td>
                             </tr>
@@ -68,9 +69,3 @@
     </div>
 </div>
 
-
-<script>
-    $(document).ready(function () {
-        $('ul.pagination > li.disabled > a').addClass('active');
-    });
-</script>

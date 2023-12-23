@@ -30,8 +30,22 @@
     <!-- Nav Bar Start -->
     @await Component.InvokeAsync("MenuView")
     <!-- Nav Bar End -->
-    
-
+    @if (TempData["AlertMessage"] != null)
+    {
+        <div class="container">
+            <div id="myElement" class="alert alert-success  " style="position:fixed; right:20px;top: 20px; z-index:10;">
+                <strong>Success !</strong>
+                @TempData["AlertMessage"]
+            </div>
+        </div>
+    }
+    <script>
+        var myElement = document.getElementById("myElement");
+        // Ẩn phần tử sau 3 giây
+        setTimeout(function () {
+            myElement.style.display = "none";
+        }, 3000);
+    </script>
     @RenderBody()
 
     <!-- Footer Start -->

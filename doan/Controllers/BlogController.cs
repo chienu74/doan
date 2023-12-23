@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using doan.Models;
 using X.PagedList;
@@ -27,6 +27,11 @@ namespace doan.Controllers
             return View(bl);
         }
 
+        public class Blog_BlogComment
+        {
+            public BlogComment BlogComment { get; set; }
+            public Blog Blog { get; set; }
+        }
         [Route("/blog-{slug}-{id:long}.html", Name = "Details")]
         public async Task<IActionResult> Details(int? id)
         {
@@ -40,31 +45,26 @@ namespace doan.Controllers
             {
                 return NotFound();
             }
+            var blog_blogComment = new Blog_BlogComment
+            {
+                Blog = blog,
+                BlogComment = new BlogComment()
+            };
             ViewBag.blogcomment = _context.BlogComments.Where(m => m.BlogId == id).ToList();
             ViewBag.category = _context.Categories.ToList();
-            return View(blog);
+            return View(blog_blogComment);
         }
-
         [HttpPost]
-        public IActionResult Create(int? id, string name, string phone, string email, string message)
+        public IActionResult Create(Blog_BlogComment blvm)
         {
-            try
+
+            if (blvm != null)
             {
-                TbBlogComment comment = new TbBlogComment();
-                comment.BlogId = id;
-                comment.Name = name;
-                comment.Phone = phone;
-                comment.Email = email;
-                comment.Detail = message;
-                comment.CreatedDate = DateTime.Now;
-                _context.Add(comment);
-                _context.SaveChangesAsync();
-                return Json(new { status = true });
+                _context.BlogComments.Add(blvm.BlogComment);
+                _context.SaveChanges();
+                TempData["AlertMessage"] = "Bình luận thành công";
             }
-            catch
-            {
-                return Json(new { status = false });
-            }
+            return Redirect("/blog-slug-"+blvm.BlogComment.BlogId +".html");
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿@using doan.Models;
-@model IEnumerable<doan.Models.Category>
+@model IEnumerable<doan.Models.ProductCategory>
 @{
     ViewData["Action"] = "Category";
 }
@@ -8,7 +8,7 @@
     <div class="app-content pt-3 p-md-3 p-lg-4">
         <div class="container-xl">
             <p>
-                <a type="buton" class="btn btn-success" asp-area="Admin" asp-controller="Category" asp-action="Create">
+                <a type="buton" class="btn btn-success" asp-area="Admin" asp-controller="ProductCategory" asp-action="Create">
                     <i class="bi bi-file-earmark-text me-1"></i>
                     Thêm loại bài viết
                 </a>
@@ -50,9 +50,9 @@
                                     @Html.DisplayFor(modelItem => item.CreatedBy)
                                 </td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.CategoryId" class="btn mr-1 mb-1 btn-success">Sửa</a>
+                                    <a asp-action="Edit" asp-route-id="@item.CategoryProductId" class="btn mr-1 mb-1 btn-success">Sửa</a>
                                     <form asp-action="Delete" id="deleteForm" method="post">
-                                        <input class="d-none" value="@item.CategoryId" name="id">
+                                        <input class="d-none" value="@item.CategoryProductId" name="id">
                                         <input class="btn mr-1 mb-1 btn-danger" type="submit" value="Xóa" onclick="confirmDelete(event)">
                                     </form>
                                 </td>

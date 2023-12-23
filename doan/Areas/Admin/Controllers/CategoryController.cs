@@ -36,21 +36,7 @@ namespace doan.Areas.Admin.Controllers
             return View(pagedMenus);
         }
         //
-        public IActionResult Delete(int? id)
-        {
-            if (!Functions.IsLogin())
-                return RedirectToAction("Index", "Login");
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            var cat = _context.Categories.Find(id);
-            if (cat == null)
-            {
-                return NotFound();
-            }
-            return View(cat);
-        }
+
         [HttpPost]
 
         public IActionResult Delete(int id)
@@ -62,6 +48,7 @@ namespace doan.Areas.Admin.Controllers
             }
             _context.Categories.Remove(deleCat);
             _context.SaveChanges();
+            TempData["AlertMessage"] = "Xóa thành công";
             return RedirectToAction("Index");
         }
         public IActionResult Create()
@@ -90,6 +77,7 @@ namespace doan.Areas.Admin.Controllers
             {
                 _context.Categories.Add(cat);
                 _context.SaveChanges();
+                TempData["AlertMessage"] = "Thêm thành công";
                 return RedirectToAction("Index");
             }
             return View(cat);
@@ -118,6 +106,7 @@ namespace doan.Areas.Admin.Controllers
             {
                 _context.Categories.Update(cat);
                 _context.SaveChanges();
+                TempData["AlertMessage"] = "Sửa thành công";
                 return RedirectToAction("Index");
             }
             return View(cat);

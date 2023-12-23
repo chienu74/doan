@@ -150,6 +150,15 @@
     <!-- Page Specific JS -->
     <script src="~/admin/assets/js/app.js"></script>
     @* @RenderSection("scripts") *@
+
+<script>
+    function confirmDelete(event) {
+        event.preventDefault();
+        if (confirm("Bạn có chắc chắn muốn xóa không?")) {
+            document.getElementById("deleteForm").submit();
+        }
+    }
+</script>
 </body>
 </html>
 

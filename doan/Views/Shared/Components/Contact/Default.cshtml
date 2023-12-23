@@ -1,20 +1,7 @@
 ﻿@using doan.Utilities;
 @model doan.Models.Contact
 
-@if (TempData["AlertMessage"] != null)
-{
-    <div id="myElement" class="alert alert-success" style="position:fixed; right:0px;">
-        <strong>Success !</strong>
-        @TempData["AlertMessage"]
-    </div>
-}
-    <script>
-        var myElement = document.getElementById("myElement");
-        // Ẩn phần tử sau 1 giây
-        setTimeout(function () {
-            myElement.style.display = "none";
-        }, 3000);
-    </script>
+
 <!-- Contact Start -->
 <div class="contact mt-6">
     <div class="container">

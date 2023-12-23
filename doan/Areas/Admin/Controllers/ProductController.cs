@@ -27,23 +27,8 @@ namespace doan.Areas.Admin.Controllers
             var prdList = _context.Products.OrderBy(m => m.ProductId).ToPagedList(pageNumber, pageSize);
             return View(prdList);
         }
-        //
-        /*   public IActionResult Delete(int? id)
-           {
 
-               if (id == null || id == 0)
-               {
-                   return NotFound();
-               }
-               var prd = _context.Products.Find(id);
-               if (prd == null)
-               {
-                   return NotFound();
-               }
-               return View(prd);
-           }
-   */
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         public IActionResult Delete(int id)
         {
             var deleProcduct = _context.Products.Find(id);
@@ -82,9 +67,9 @@ namespace doan.Areas.Admin.Controllers
             {
                 _context.Products.Add(prd);
                 _context.SaveChanges();
+                TempData["AlertMessage"] = "Thêm thành công";
                 return RedirectToAction("Index");
             }
-            TempData["AlertMessage"] = "Thêm thành công";
             return View(prd);
         }
 

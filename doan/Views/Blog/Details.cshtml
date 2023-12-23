@@ -1,4 +1,5 @@
-﻿@model doan.Models.Blog
+﻿@using doan.Utilities;
+@model doan.Controllers.BlogController.Blog_BlogComment;
 @{
     ViewBag.Active = "Blog";
     List<BlogComment> blogComment = ViewBag.blogcomment;
@@ -27,9 +28,9 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="single-content">
-                    <h2>@Html.DisplayFor(model=>model.Title)</h2>
-                    <p>@Html.Raw(Model.Detail)</p>
-                    <p>@Html.Raw(Model.Description)</p>
+                    <h2>@Html.Raw(Model.Blog.Title)</h2>
+                    <p>@Html.Raw(Model.Blog.Detail)</p>
+                    <p>@Html.Raw(Model.Blog.Description)</p>
 
                 </div>
                 <div class="single-tags">
@@ -128,28 +129,30 @@
                 </div>
                 <div class="comment-form">
                     <h2>Leave a comment</h2>
-                    <form>
+                    <form asp-action="Create" method="post">
                         <div class="form-group">
                             <label for="name">Name *</label>
-                            <input type="text" class="form-control" id="c_name">
+                            <input type="text" class="form-control" asp-for="BlogComment.Name">
                         </div>
                         <div class="form-group">
                             <label for="email">Email *</label>
-                            <input type="email" class="form-control" id="c_email">
+                            <input type="email" class="form-control" asp-for="BlogComment.Email">
                         </div>
                         <div class="form-group">
                             <label for="number">Number</label>
-                            <input type="text" class="form-control" id="c_phone">
+                            <input type="text" class="form-control" asp-for="BlogComment.Phone">
                         </div>
 
                         <div class="form-group">
                             <label for="message">Message *</label>
-                            <textarea id="c_message" cols="30" rows="5" class="form-control"></textarea>
+                            <textarea asp-for="BlogComment.Detail" cols="30" rows="5" class="form-control"></textarea>
                         </div>
                         <div class="form-group">
-                            <input id="c_submit" type="submit" value="Post Comment" class="btn custom-btn">
+                            <input type="submit" value="Post Comment" class="btn custom-btn">
                         </div>
-                        <input type="hidden" id="blog_id" value="@Model.BlogId" />
+                        <input type="hidden" asp-for="BlogComment.CreatedDate" value="@Functions.getCurrentDate()" />
+                        <input type="hidden" asp-for="BlogComment.IsActive" value="True" />
+                        <input type="hidden" asp-for="BlogComment.BlogId" value="@Model.Blog.BlogId" />
                     </form>
                 </div>
             </div>
