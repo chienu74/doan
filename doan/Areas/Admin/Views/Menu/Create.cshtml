@@ -2,6 +2,8 @@
 @using doan.Utilities;
 
 @{
+    ViewData["Controller"] = "Menu";
+    ViewData["Action"] = "Create";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -69,7 +71,7 @@
                     </label>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <input type="submit" value="Create" class="btn btn-success" />
                 </div>
             </form>
             <div>

@@ -22,5 +22,6 @@ namespace doan.Models
         public DbSet<AdminMenu> AdminMenus { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Chef> Chefs { get; set; }
     } 
 }

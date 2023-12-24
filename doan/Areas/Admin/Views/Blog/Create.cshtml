@@ -2,6 +2,9 @@
 @model doan.Models.Blog
 
 @{
+    ViewData["Controller"] = "Blog";
+    ViewData["Action"] = "Create";
+
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 <div class="app-wrapper">
@@ -70,11 +73,11 @@
                     </label>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <button class="btn btn-success" type="submit" >Tạo bài viết</button>
                 </div>
             </form>
             <div>
-                <a asp-action="Index">Back to List</a>
+                <a asp-action="Index" style="color: #198754; text-decoration: none;">Back to List</a>
             </div>
         </div>
     </div>
