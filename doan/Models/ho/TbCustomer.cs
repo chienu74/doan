@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 
 namespace doan.Models.ho
@@ -25,3 +25,4 @@ namespace doan.Models.ho
         public virtual ICollection<TbOrder> TbOrders { get; set; }
     }
 }
+*/

@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 
 namespace doan.Models.ho
@@ -7,7 +7,7 @@ namespace doan.Models.ho
     {
         public TbRole()
         {
-            TbAccounts = new HashSet<TbAccount>();
+            TbAccounts = new HashSet<Accounts>();
         }
 
         public int RoleId { get; set; }
@@ -17,3 +17,4 @@ namespace doan.Models.ho
         public virtual ICollection<TbAccount> TbAccounts { get; set; }
     }
 }
+*/

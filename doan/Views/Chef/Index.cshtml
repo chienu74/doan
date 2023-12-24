@@ -1,0 +1,27 @@
+﻿@model IList<Chef>
+@using doan.Models;
+
+<div class="page-header">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>Chef Us</h2>
+            </div>
+            <div class="col-12">
+                <a href="">Home</a>
+                <a href="">Chef</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Team Start -->
+<div class="team">
+    <div class="container">
+        <div class="row ">
+            @await Component.InvokeAsync("Chef")   
+        </div>
+    </div>
+</div>
+<!-- Team End -->
+

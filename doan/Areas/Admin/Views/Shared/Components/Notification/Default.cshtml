@@ -4,7 +4,11 @@
 @{
     var accList = ViewBag.accList as IList<Account>;
 }
-
+<style>
+    #hoverspan :hover {
+        color: #15a362;
+    }
+</style>
 <div class="app-utility-item app-notifications-dropdown dropdown">
     <a class="dropdown-toggle no-toggle-arrow" id="notifications-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" title="Notifications">
         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
@@ -98,22 +102,22 @@
 
 <div class="app-utility-item app-user-dropdown dropdown">
     <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown"
-       href="#" role="button" aria-expanded="false">
+       href="#" role="button" aria-expanded="false" style="text-decoration:none;">
         <img src=" @ViewBag.acccca.Avatar" alt="user profile" style="border-radius:50%; width:45px;height:45px;object-fit:cover;">
         @ViewBag.acccca.Username
     </a>
     <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
         <li>
-            <a class="dropdown-header" href="">
+            <a id="fixa" class="dropdown-header" href="">
                 @if (ViewBag.acccca.FullName == "")
                 {
                     <h6> @ViewBag.acccca.UserName</h6>
                 }
                 else
                 {
-                <h6> @ViewBag.acccca.FullName</h6>
+                    <h6> @ViewBag.acccca.FullName</h6>
                 }
-                <span> @ViewBag.acccca.Email</span>
+                <span id="hoverspan"> @ViewBag.acccca.Email</span>
             </a>
         </li>
         <li><a class="dropdown-item" href="/Admin/Account">Account</a></li>

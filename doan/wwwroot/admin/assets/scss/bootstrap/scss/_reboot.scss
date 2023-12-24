@@ -241,13 +241,18 @@ sup { top: -.5em; }
 // Links
 
 a {
-  color: rgba(var(--#{$prefix}link-color-rgb), var(--#{$prefix}link-opacity, 1));
-  text-decoration: $link-decoration;
+    color: rgba(var(--#{$prefix}link-color-rgb), var(--#{$prefix}link-opacity, 1));
+    text-decoration: $link-decoration;
+  /*  text-decoration: none;*/
 
-  &:hover {
-    --#{$prefix}link-color-rgb: var(--#{$prefix}link-hover-color-rgb);
-    text-decoration: $link-hover-decoration;
-  }
+    &:hover {
+        --# {
+            $prefix
+        }
+
+        link-color-rgb: var(--#{$prefix}link-hover-color-rgb);
+        text-decoration: $link-hover-decoration;
+    }
 }
 
 // And undo these styles for placeholder links/named anchors (without href).
