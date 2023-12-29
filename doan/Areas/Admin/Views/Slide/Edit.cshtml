@@ -1,0 +1,61 @@
+﻿@using doan.Utilities;
+@model doan.Models.Slide
+
+@{
+    ViewData["Controller"] = "Slide";
+    ViewData["Action"] = "Edit";
+
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="app-wrapper">
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="container-xl">
+            <h1 class="app-page-title">  @ViewData["Controller"] / @ViewData["Action"]  </h1>
+            <form asp-action="Edit" method="post">
+
+                <input asp-for="SlideId" class="d-none" />
+
+                <div class="form-group col-md-12">
+                    <label class="control-label">Images</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-success" type="button" onclick="openDialog()">Choose a pic</button>
+                        </div>
+                        <input type="text" class="form-control" asp-for="SlideImage" id="file_input">
+                    </div>
+                </div>
+
+                <div class="form-group d-none">
+                    <input asp-for="CreatedBy" class="form-control" />
+                </div>
+
+                <div class="form-group d-none">
+                    <input asp-for="CreatedDate" class="form-control" />
+                </div>
+                <div class="form-group d-none">
+                    <input asp-for="ModifiedBy" class="form-control" value="@Functions._UserName" />
+                </div>
+                <div class="form-group d-none">
+                    <input asp-for="ModifiedDate" class="form-control" value="@Functions.getCurrentDate()" />
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        @Html.CheckBox("IsActive",Model.IsActive)
+                        IsActive
+                    </label>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success" type="submit">Lưu</button>
+                </div>
+            </form>
+            <div>
+                <a asp-action="Index" style="color: #198754; text-decoration: none;">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+@{
+    var summerNote = new doan.Areas.Admin.Models.SummerNote("#Detail");
+    <partial name="_SummerNote" model="summerNote" />
+}

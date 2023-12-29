@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using doan.Models;
-using Microsoft.EntityFrameworkCore;
-using doan.Areas.Admin.Models;
 using X.PagedList;
 using doan.Utilities;
 
@@ -10,10 +8,10 @@ namespace doan.Areas.Admin.Controllers
 {
     [Area("Admin")]
 
-    public class ProductController : Controller
+    public class SlideController : Controller
     {
         private readonly DataContext _context;
-        public ProductController(DataContext context)
+        public SlideController(DataContext context)
         {
             _context = context;
         }
@@ -21,22 +19,24 @@ namespace doan.Areas.Admin.Controllers
         {
             if (!Functions.IsLogin())
                 return RedirectToAction("Index", "Login");
+
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
             var pageSize = 10;
 
-            var prdList = _context.Products.OrderByDescending(m => m.ProductId).ToPagedList(pageNumber, pageSize);
-            return View(prdList);
+            var slList = _context.Slides.OrderByDescending(m => m.SlideId).ToPagedList(pageNumber, pageSize);
+            return View(slList);
         }
+        //
 
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var deleProcduct = _context.Products.Find(id);
-            if (deleProcduct == null)
+            var deleSlide = _context.Slides.Find(id);
+            if (deleSlide == null)
             {
                 return NotFound();
             }
-            _context.Products.Remove(deleProcduct);
+            _context.Slides.Remove(deleSlide);
             _context.SaveChanges();
             TempData["AlertMessage"] = "Xóa thành công";
             return RedirectToAction("Index");
@@ -45,32 +45,20 @@ namespace doan.Areas.Admin.Controllers
         {
             if (!Functions.IsLogin())
                 return RedirectToAction("Index", "Login");
-            var prdcatList = (from m in _context.ProductCategories
-                              select new SelectListItem()
-                              {
-                                  Text = m.Title,
-                                  Value = m.CategoryProductId.ToString()
-                              }).ToList();
-            prdcatList.Insert(0, new SelectListItem()
-            {
-                Text = "----Select----",
-                Value = "0"
-            });
-            ViewBag.prdcatList = prdcatList;
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Product prd)
+        public IActionResult Create(Slide sl)
         {
             if (ModelState.IsValid)
             {
-                _context.Products.Add(prd);
+                _context.Slides.Add(sl);
                 _context.SaveChanges();
                 TempData["AlertMessage"] = "Thêm thành công";
                 return RedirectToAction("Index");
             }
-            return View(prd);
+            return View(sl);
         }
 
         public IActionResult Edit(int? id)
@@ -81,37 +69,25 @@ namespace doan.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var mn = _context.Products.Find(id);
-            if (mn == null)
+            var sl = _context.Slides.Find(id);
+            if (sl == null)
             {
                 return NotFound();
             }
-            var catList = (from m in _context.ProductCategories
-                           select new SelectListItem()
-                           {
-                               Text = m.Title,
-                               Value = m.CategoryProductId.ToString()
-                           }).ToList();
-            catList.Insert(0, new SelectListItem()
-            {
-                Text = "----Select----",
-                Value = string.Empty
-            });
-            ViewBag.catList = catList;
-            return View(mn);
+            return View(sl);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Product mn)
+        public IActionResult Edit(Slide sl)
         {
             if (ModelState.IsValid)
             {
-                _context.Products.Update(mn);
+                _context.Slides.Update(sl);
                 _context.SaveChanges();
                 TempData["AlertMessage"] = "Sửa thành công";
                 return RedirectToAction("Index");
             }
-            return View(mn);
+            return View(sl);
         }
     }
 }

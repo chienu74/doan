@@ -11,8 +11,8 @@
 
     <meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
     <meta name="author" content="Xiaoying Riley at 3rd Wave Media">
-    <link rel="shortcut icon" href="~/admin/favicon.ico">
-
+    <link rel="stylesheet" rel="shortcut icon" href="~/admin/favicon.ico">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <!-- FontAwesome JS-->
     <script defer src="~/admin/assets/plugins/fontawesome/js/all.min.js"></script>
 
@@ -156,10 +156,10 @@
     @* @RenderSection("scripts") *@
 
 <script>
-    function confirmDelete(event) {
+    function confirmDelete(event,Id) {
         event.preventDefault();
         if (confirm("Bạn có chắc chắn muốn xóa không?")) {
-            document.getElementById("deleteForm").submit();
+            document.getElementById("deleteForm-" + Id).submit();
         }
     }
 </script>

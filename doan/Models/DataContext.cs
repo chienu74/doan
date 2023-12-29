@@ -23,5 +23,6 @@ namespace doan.Models
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Chef> Chefs { get; set; }
+        public DbSet<Slide> Slides { get; set; }
     } 
 }

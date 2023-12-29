@@ -1,6 +1,7 @@
 ﻿using doan.Models;
 using doan.Models.ho;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace doan.Controllers
 {

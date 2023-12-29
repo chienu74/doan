@@ -51,9 +51,9 @@
                                 </td>
                                 <td>
                                     <a asp-action="Edit" asp-route-id="@item.CategoryId" class="btn mr-1 mb-1 btn-success">Sửa</a>
-                                    <form asp-action="Delete" id="deleteForm" method="post">
+                                    <form asp-action="Delete" id="deleteForm-@item.CategoryId" method="post">
                                         <input class="d-none" value="@item.CategoryId" name="id">
-                                        <input class="btn mr-1 mb-1 btn-danger" type="submit" value="Xóa" onclick="confirmDelete(event)">
+                                        <input class="btn mr-1 mb-1 btn-danger" type="submit" value="Xóa" onclick="confirmDelete(event,@item.CategoryId)">
                                     </form>
                                 </td>
                             </tr>

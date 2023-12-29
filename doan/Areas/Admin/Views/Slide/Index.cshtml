@@ -1,23 +1,20 @@
 ﻿@using X.PagedList;
 @using X.PagedList.Mvc.Core;
 @using X.PagedList.Mvc.Common;
-@model IPagedList<doan.Models.Blog>
+@model IPagedList<doan.Models.Slide>
 @{
-	ViewData["Controller"] = "Blog";
+    ViewData["Controller"] = "Slide";
     ViewData["Action"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 <div class="app-wrapper">
     <div class="app-content pt-3 p-md-3 p-lg-4">
         <div class="container-xl">
+            <h1 class="app-page-title">  @ViewData["Controller"] / @ViewData["Action"]  </h1>
             <p>
-                <a type="buton" class="btn btn-success" asp-area="Admin" asp-controller="Blog" asp-action="Create">
+                <a type="buton" class="btn btn-success" asp-area="Admin" asp-controller="Slide" asp-action="Create">
                     <i class="bi bi-file-earmark-text me-1"></i>
-                    Thêm bài viết
-                </a>
-                <a type="buton" class="btn btn-success" asp-area="Admin" asp-controller="Category" asp-action="Index">
-                    <i class="bi bi-file-earmark-text me-1"></i>
-                    Loại bài viết
+                    Thêm ảnh
                 </a>
             </p>
             <div class="content-body">
@@ -26,7 +23,7 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Ảnh</th>
-                            <th scope="col">Tiêu đề</th>
+                            <th scope="col">Người tạo </th>
                             <th scope="col">Ẩn hiện</th>
                             <th scope="col"></th>
                         </tr>
@@ -40,15 +37,15 @@
                             <tr>
                                 <td>@(++i)</td>
                                 <td>
-                                    <img style="height:125px;" src="@item.Image">
+                                    <img style="height:125px;" src="@item.SlideImage">
                                 </td>
-                                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                <td>@Html.DisplayFor(modelItem => item.CreatedBy)</td>
                                 <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.BlogId" class="btn mr-1 mb-1 btn-success">Edit</a>
-                                    <form asp-action="Delete" method="post" id="deleteForm-@item.BlogId">
-                                        <input class="d-none" value="@item.BlogId" name="id">
-                                        <input class="btn mr-1 mb-1 btn-danger" type="submit" value="Xóa" onclick="confirmDelete(event,@item.BlogId)">
+                                    <a asp-action="Edit" asp-route-id="@item.SlideId" class="btn mr-1 mb-1 btn-success">Edit</a>
+                                    <form asp-action="Delete" method="post" id="deleteForm-@item.SlideId">
+                                        <input class="d-none" value="@item.SlideId" name="id">
+                                        <input class="btn mr-1 mb-1 btn-danger" type="submit" value="Xóa" onclick="confirmDelete(event,@item.SlideId)">
                                     </form>
                                 </td>
                             </tr>
@@ -58,7 +55,6 @@
                 @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index",new{page=page}),
                 new X.PagedList.Mvc.Common.PagedListRenderOptions
                 {
-                
                 PageClasses = new[] {"page-link"},
                 LiElementClasses = new[] {"page-item"},
                 UlElementClasses = new[] { "pagination", "justify-content-center"},

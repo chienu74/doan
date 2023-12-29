@@ -288,3 +288,26 @@
     </div>
 </div>
 <!-- Menu End -->
+<div id="output"></div>
+<script>
+    var outputDiv = document.getElementById('output');
+    var localStorageKeys = Object.keys(localStorage);
+
+    var filteredKeys = localStorageKeys.filter(function (key) {
+        return key.startsWith('productId_');
+    });
+
+    if (filteredKeys.length === 0) {
+        outputDiv.textContent = 'No data in Local Storage.';
+    } else {
+        var outputHTML = '<ul>';
+
+        filteredKeys.forEach(function (key) {
+            var value = localStorage.getItem(key);
+            outputHTML += '<li>' + key + ': ' + value + '</li>';
+        });
+
+        outputHTML += '</ul>';
+        outputDiv.innerHTML = outputHTML;
+    }
+</script>

@@ -20,6 +20,8 @@ namespace doan.Controllers
 
         public IActionResult Index()
         {
+            var slide = _context.Slides.Where(i => i.IsActive == true).ToList();
+            ViewBag.Slide = slide;
             return View();
         }
 
@@ -32,10 +34,6 @@ namespace doan.Controllers
             return View();
         }
         public IActionResult Booking()
-        {
-            return View();
-        }
-        public IActionResult Chef()
         {
             return View();
         }

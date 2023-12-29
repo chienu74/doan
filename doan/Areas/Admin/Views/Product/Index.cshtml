@@ -28,6 +28,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Ảnh</th>
                             <th scope="col">Tiêu đề</th>
+                            <th scope="col"> Giá </th>
                             <th scope="col">Nguời sửa</th>
                             <th scope="col">Ẩn hiện</th>
                             <th scope="col"></th>
@@ -45,13 +46,14 @@
                                     <img style="height:125px;" src="@item.Image">
                                 </td>
                                 <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Price)</td>
                                 <td>@Html.DisplayFor(modelItem => item.ModifiedBy)</td>
                                 <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
                                 <td>
                                     <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn mr-1 mb-1 btn-success">Sửa</a>
-                                    <form asp-action="Delete" id="deleteForm" method="post">
+                                    <form asp-action="Delete" id="deleteForm-@item.ProductId" method="post">
                                         <input class="d-none" value="@item.ProductId" name="id">
-                                        <input class="btn mr-1 mb-1 btn-danger" type="submit" value="Xóa" onclick="confirmDelete(event)">
+                                        <input class="btn mr-1 mb-1 btn-danger" type="submit" value="Xóa" onclick="confirmDelete(event,'@item.ProductId')">
                                     </form>
                                 </td>
                             </tr>
