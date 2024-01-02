@@ -1,0 +1,148 @@
+﻿@model doan.Models.Customer;
+@{
+    ViewBag.Active = "Booking";
+    IList<Cart> cart = ViewBag.CartItems;
+}
+
+<!-- Page Header Start -->
+<div class="page-header mb-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>Book A Table</h2>
+            </div>
+            <div class="col-12">
+                <a href="">Home</a>
+                <a href="">Booking</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+<!-- Booking Start -->
+<div class="booking">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <div class="booking-content">
+                    <div class="section-header">
+                        <p>Book A Table</p>
+                        <h2>Book Your Table For Private Dinners & Happy Hours</h2>
+                    </div>
+                    <h1> @ViewBag.Count </h1>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Title</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in cart)
+                            {
+                                <tr>
+                                    <td><img style="width: 150px;" src="@item.Image"></td>
+                                    <td>@item.Title</td>
+                                    <td>@item.Price</td>
+                                    <td>
+                                        <div style="display:flex;">
+                                            <button onclick="giam(this,@item.ProductId)">-</button>
+                                            <input id="quantityInput" type="number" min="1" value="@item.Quantity">
+                                            <button onclick="tang(this,@item.ProductId)">+</button>
+                                        </div>
+
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="booking-form">
+                    <form asp-action="Create" method="post">
+                        <div class="control-group">
+                            <div asp-for="name" class="input-group">
+                                <input asp-for="UserName" type="text" class="form-control" placeholder="Name" required="required" />
+                                <div class="input-group-append">
+                                    <div class="input-group-text"><i class="far fa-user"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="input-group">
+                                <input asp-for="Email" type="email" class="form-control" placeholder="Email" required="required" />
+                                <div class="input-group-append">
+                                    <div class="input-group-text"><i class="far fa-envelope"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="input-group">
+                                <input asp-for="Phone" type="text" class="form-control" placeholder="Mobile" required="required" />
+                                <div class="input-group-append">
+                                    <div class="input-group-text"><i class="fa fa-mobile-alt"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="input-group date" id="date" data-target-input="nearest">
+                                <input asp-for="Birthday" type="text" class="form-control datetimepicker-input" placeholder="Date" data-target="#date" data-toggle="datetimepicker" />
+                                <div class="input-group-append" data-target="#date" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div asp-for="name" class="input-group">
+                                <input asp-for="Location" type="text" class="form-control" placeholder="location" required="required" />
+                                <div class="input-group-append">
+                                    <div class="input-group-text"><i class="far fa-address-card"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn custom-btn" type="submit">Book Now</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Booking End -->
+<script>
+    function tang(button, productId) {
+        var quantityInput = button.previousElementSibling;
+        var newQuantity = parseInt(quantityInput.value) + 1;
+        quantityInput.value = newQuantity;
+        updateCartItem(productId, newQuantity);
+    }
+
+    function giam(button, productId) {
+        var quantityInput = button.nextElementSibling;
+        var newQuantity = parseInt(quantityInput.value) - 1;
+        if (newQuantity >= 1) {
+            quantityInput.value = newQuantity;
+            updateCartItem(productId, newQuantity);
+        }
+    }
+
+    function updateCartItem(productId, newQuantity) {
+        var cartItems = getCartItems();
+
+        if (cartItems) {
+            var updatedCartItems = cartItems.map(function (item) {
+                if (item.productId === productId) {
+                    item.quantity = newQuantity;
+                }
+                return item;
+            });
+
+            setCartItems(updatedCartItems);
+        }
+    }
+</script>

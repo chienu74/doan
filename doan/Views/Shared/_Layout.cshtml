@@ -121,5 +121,68 @@
 
     <!-- Template Javascript -->
     <script src="~/js/main.js"></script>
+
+    <script>
+        // Hàm để thêm sản phẩm vào giỏ hàng
+        function addToCart(productId) {
+            var cartItems = getCartItems();
+            if (!cartItems) {
+                cartItems = [];
+            }
+            var existingProduct = cartItems.find(function (item) {
+                return item.productId === productId;
+            });
+
+            if (existingProduct) {
+                existingProduct.quantity++;
+            } else {
+                var newProduct = {
+                    productId: productId,
+                    quantity: 1
+                };
+                cartItems.push(newProduct);
+            }
+            setCartItems(cartItems);
+        }
+
+        // Hàm để lấy thông tin giỏ hàng từ cookie
+        function getCartItems() {
+            var cartItemsString = getCookie("cartItems");
+            if (cartItemsString) {
+                return JSON.parse(cartItemsString);
+            }
+            return null;
+        }
+
+        // Hàm để lưu thông tin giỏ hàng vào cookie
+        function setCartItems(cartItems) {
+            var cartItemsString = JSON.stringify(cartItems);
+            setCookie("cartItems", cartItemsString, 7); // Lưu trữ trong 7 ngày
+        }
+
+        function getCookie(name) {
+            var cookieName = name + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var cookies = decodedCookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.indexOf(cookieName) === 0) {
+                    return cookie.substring(cookieName.length, cookie.length);
+                }
+            }
+            return "";
+        }
+
+        // Hàm để đặt giá trị cho một cookie
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + encodeURIComponent(value) + expires + "; path=/";
+        }
+    </script>
 </body>
 </html>

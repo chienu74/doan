@@ -1,9 +1,9 @@
 ﻿using doan.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
-using System.Drawing.Printing;
-using System.Linq;
+using Microsoft.JSInterop;
+using static Microsoft.AspNetCore.Razor.Language.TagHelperMetadata;
+using Newtonsoft.Json;
 
 namespace doan.Controllers
 {
