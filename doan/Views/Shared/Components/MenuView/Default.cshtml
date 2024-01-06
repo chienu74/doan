@@ -16,20 +16,26 @@
                     string active = "";
                     var menuId = menu.MenuId;
                     var menuChild = Model.Where(m => m.ParentId == menuId);
-                    if(menu.MenuName == ViewBag.Active)
+                    if (menu.MenuName == ViewBag.Active)
                     {
                         active = "active";
                     }
                     if (menuChild.Count() == 0)
                     {
-                        <a href="/@menu.Link" class="nav-item nav-link @active">@menu.MenuName</a>
+                        <a href="/@menu.Link" class="nav-item nav-link @active">
+                            @menu.MenuName
+                        </a>
+
+                        @if (menu.MenuName == "Booking")
+                        {
+                            <span class="quantity" id="count"></span>
+                        }
                     }
                     else
                     {
                         <div class="nav-item dropdown">
                             <a href="/@menu.Alias" class="nav-link dropdown-toggle" data-toggle="dropdown">
                                 @menu.MenuName
-
                             </a>
                             <div class="dropdown-menu">
                                 @foreach (var itemchild in menuChild)
@@ -51,3 +57,66 @@
         </div>
     </div>
 </div>
+<style>
+    .quantity {
+        display: inline-block;
+        padding: 4px 8px;
+        background-color: red;
+        color: white;
+        border-radius: 33px;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        line-height: 20px;
+    }
+</style>
+
+<script>
+    function getCookieValue(cookieName) {
+        var name = cookieName + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var cookiePairs = decodedCookie.split(";");
+
+        for (var i = 0; i < cookiePairs.length; i++) {
+            var cookiePair = cookiePairs[i].trim();
+            if (cookiePair.indexOf(name) === 0) {
+                return cookiePair.substring(name.length, cookiePair.length);
+            }
+        }
+
+        return null;
+    }
+
+    function calculateSum() {
+        var json = getCookieValue("cartItems");
+        console.log(json);
+
+        if (json) {
+            var jsonArray = JSON.parse(json);
+
+            var sum = 0;
+
+            for (var i = 0; i < jsonArray.length; i++) {
+                var item = jsonArray[i];
+                sum += item.quantity;
+            }
+
+            console.log(sum);
+
+            var elementId = "count";
+            var element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = sum.toString();
+            }
+        }
+    }
+    calculateSum();
+
+    setInterval(function () {
+        var currentJson = getCookieValue("cartItems");
+        if (currentJson !== json) {
+            json = currentJson;
+            calculateSum();
+        }
+    }, 1000);
+</script>

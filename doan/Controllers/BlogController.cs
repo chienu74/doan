@@ -17,8 +17,6 @@ namespace doan.Controllers
         {
             _context = context;
         }
-
-        // GET: Blogs
         public IActionResult Index(int? page = 1)
         {
             int pageSize = 6;

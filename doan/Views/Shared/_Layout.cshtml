@@ -27,6 +27,7 @@
 </head>
 
 <body>
+
     <!-- Nav Bar Start -->
     @await Component.InvokeAsync("MenuView")
     <!-- Nav Bar End -->
@@ -143,6 +144,11 @@
                 cartItems.push(newProduct);
             }
             setCartItems(cartItems);
+            var thongBaoDiv = document.getElementById("thongbao");
+            thongBaoDiv.classList.remove("d-none");
+            setTimeout(function () {
+                thongBaoDiv.classList.add("d-none");
+            }, 3000);
         }
 
         // Hàm để lấy thông tin giỏ hàng từ cookie

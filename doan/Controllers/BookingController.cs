@@ -23,9 +23,11 @@ namespace doan.Controllers
         }
         public IActionResult Index()
         {
-            string cookieValue = Request.Cookies["cartItems"].ToString();
+            string cookieValue = Request.Cookies["cartItems"]?.ToString();
 
-            List<CartItem> cartItems = JsonConvert.DeserializeObject<List<CartItem>>(cookieValue);
+            List<CartItem> cartItems = string.IsNullOrEmpty(cookieValue)
+                ? new List<CartItem>()
+                : JsonConvert.DeserializeObject<List<CartItem>>(cookieValue);
 
             var cart = (from cartitem in cartItems
                         join product in _context.Products
@@ -47,29 +49,55 @@ namespace doan.Controllers
             ViewBag.Count = count;
             return View();
         }
-
+        public class CheckOut
+        {
+            public Customer Customer { get; set; }
+            public Order Order { get; set; }
+            public List<OrderDetail> OrderDetail { get; set; } = new List<OrderDetail>();
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Customer cus)
+        public IActionResult Create(CheckOut checkout)
         {
-            var check = _context.Customers.Where(m => m.UserName == cus.UserName).ToList();
-            if (check.Count() == 0)
+            var model = new CheckOut
             {
-                _context.Customers.Add(cus);
+                Customer = new Customer(),
+                Order = new Order(),
+                OrderDetail = new List<OrderDetail>(),
+            };
+            var check = _context.Customers.FirstOrDefault(m => m.UserName == checkout.Customer.UserName);
+            if (check == null)
+            {
+                //thêm khách hàng
+                _context.Customers.Add(checkout.Customer);
                 _context.SaveChanges();
-                TempData["AlertMessage"] = "Thêm thành công";
+                //thêm hóa đơn
+                int customeid = checkout.Customer.CustomerId;
+
+                Order or = new Order
+                {
+                    CustomerId = customeid,
+                    CreatedDate = DateTime.Now
+                };
+                _context.Add(or);
+                _context.SaveChanges();
+                //them sp vao hoa don chi tiet
+                int orderid = or.OrderId;
+                int i = 0;
+                foreach (var item in checkout.OrderDetail)
+                {
+                    checkout.OrderDetail[i].OrderId = orderid;
+                    _context.Add(checkout.OrderDetail[i]);
+                    _context.SaveChanges();
+                    i++;
+                }
+                TempData["AlertMessage"] = "Đặt thành công";
+                Response.Cookies.Delete("cartItems");
             }
             else
             {
-                var existingCustomer = _context.Customers.FirstOrDefault(m => m.UserName == cus.UserName);
-                if (existingCustomer != null)
-                {
-                    existingCustomer.UserName = cus.UserName;
-                    // Cập nhật các thông tin khác tương ứng
-
-                    _context.SaveChanges();
-                    TempData["AlertMessage"] = "Cập nhật thành công";
-                }
+                //update
+                TempData["AlertMessage"] = "trùng rồi";
             }
 
             return RedirectToAction("Index");

@@ -33,11 +33,11 @@ namespace doan.Controllers
         {
             return View();
         }
-        public IActionResult Booking()
+        public IActionResult Fecature()
         {
             return View();
         }
-        public IActionResult Fecature()
+        public IActionResult Booking()
         {
             return View();
         }
