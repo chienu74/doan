@@ -6,18 +6,24 @@
 
 <!--Recent Post -->
 <div class="sidebar-widget">
-    <h2 class="widget-title">Recent Post</h2>
+    <h2 class="widget-title">Bài viết gần nhất</h2>
     <div class="recent-post">
         @foreach (var item in Model)
         {
-            var createDay = Convert.ToInt32(@item.CreatedDate.ToString("dd"));
-            var createHour = Convert.ToInt32(@item.CreatedDate.ToString("HH"));
+            var createHour = Convert.ToInt32(item.CreatedDate.ToString("HH"));
+            var createDay = Convert.ToInt32(item.CreatedDate.ToString("dd"));
+            var createMonth = Convert.ToInt32(item.CreatedDate.ToString("MM"));
+            var createYear = Convert.ToInt32(item.CreatedDate.ToString("yyyy"));
 
-            var dayNow = Convert.ToInt32(@Functions.getDay());
-            var hourNow = Convert.ToInt32(@Functions.getHour());
+            var hourNow = Convert.ToInt32(DateTime.Now.ToString("HH"));
+            var dayNow = Convert.ToInt32(DateTime.Now.ToString("dd"));
+            var monthNow = Convert.ToInt32(DateTime.Now.ToString("MM"));
+            var yearNow = Convert.ToInt32(DateTime.Now.ToString("yyyy"));
 
-            var day = dayNow - createDay;
-            var hour = day*24 + (hourNow-createHour);
+            var year = yearNow - createYear;
+            var month = year * 12 + monthNow - createMonth;
+            var day = month * 30 + dayNow - createDay;
+            var hour = day * 24 + hourNow - createHour;
 
             String url = Functions.TitleSlugGeneration("blog", item.Title, item.BlogId);
             <div class="post-item">
@@ -28,10 +34,28 @@
                     <a href="/@url">@item.Title</a>
                     <div class="post-meta">
                         <p>By<a href="">@item.CreatedBy</a></p>
-                        @if(@day>0){
-                            <p><a href="">@day ngày trước</a></p>
-                        }else{
+                        @if (hour<24)
+                        {
                             <p><a href="">@hour giờ trước</a></p>
+                        }
+                        else
+                        {
+                            if (day < 30)
+                            {
+                                <p><a href="">@day ngày trước</a></p>
+                            }
+                            else 
+                            {
+                                if (month < 12)
+                                {
+                                    <p><a href="">@month tháng trước</a></p>
+                                }
+                                else
+                                {
+                                    <p><a href="">@year năm trước</a></p>
+
+                                }
+                            }
                         }
                     </div>
                 </div>

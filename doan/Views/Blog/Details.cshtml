@@ -4,6 +4,7 @@
     ViewBag.Active = "Blog";
     List<BlogComment> blogComment = ViewBag.blogcomment;
     List<Category> category = ViewBag.category;
+    List<Blog> blog = ViewBag.blog;
 }
 
 
@@ -12,11 +13,11 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h2>Blog Detail</h2>
+                <h2>Bài viết chi tiết</h2>
             </div>
             <div class="col-12">
-                <a href="">Home</a>
-                <a href="">Detail</a>
+                <a href="">Trang chủ</a>
+                <a href="">Chi tiết</a>
             </div>
         </div>
     </div>
@@ -36,10 +37,10 @@
                 <div class="single-tags">
                     @foreach (var item in category)
                     {
-                        <a href="">@item.Title</a>
+                        <a href="/Blog?searchString=@item.CategoryId">@item.Title</a>
                     }
                 </div>
-                <div class="single-bio">
+                <div class="single-bio d-none">
                     <div class="single-bio-img">
                         <img src="img/user.jpg" />
                     </div>
@@ -51,56 +52,27 @@
                     </div>
                 </div>
                 <div class="single-related">
-                    <h2>Related Post</h2>
+                    <h2>Bài viết liên quan</h2>
+                    @{
+                        var bll = blog.Where(m => m.CategoryId == Model.Blog.CategoryId && m.BlogId != Model.Blog.BlogId).ToList();
+                    }
                     <div class="owl-carousel related-slider">
+                        @foreach(var item in bll)
+                        {
+                            string url = Functions.TitleSlugGeneration("blog", item.Title, item.BlogId);
                         <div class="post-item">
                             <div class="post-img">
-                                <img src="img/post-1.jpg" />
+                                <img src="@item.Image" style="height: 60px; width:80px;" />
                             </div>
                             <div class="post-text">
-                                <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                                <a href="@url">@item.Title</a>
                                 <div class="post-meta">
-                                    <p>By<a href="">Admin</a></p>
-                                    <p>In<a href="">Web Design</a></p>
+                                    <p>By<a href="">@item.CreatedBy</a></p>
                                 </div>
                             </div>
                         </div>
-                        <div class="post-item">
-                            <div class="post-img">
-                                <img src="img/post-2.jpg" />
-                            </div>
-                            <div class="post-text">
-                                <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                <div class="post-meta">
-                                    <p>By<a href="">Admin</a></p>
-                                    <p>In<a href="">Web Design</a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post-item">
-                            <div class="post-img">
-                                <img src="img/post-3.jpg" />
-                            </div>
-                            <div class="post-text">
-                                <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                <div class="post-meta">
-                                    <p>By<a href="">Admin</a></p>
-                                    <p>In<a href="">Web Design</a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post-item">
-                            <div class="post-img">
-                                <img src="img/post-4.jpg" />
-                            </div>
-                            <div class="post-text">
-                                <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                <div class="post-meta">
-                                    <p>By<a href="">Admin</a></p>
-                                    <p>In<a href="">Web Design</a></p>
-                                </div>
-                            </div>
-                        </div>
+                            
+                        }
                     </div>
                 </div>
 
@@ -128,10 +100,10 @@
                     </ul>
                 </div>
                 <div class="comment-form">
-                    <h2>Leave a comment</h2>
+                    <h2>Để lại bình luận</h2>
                     <form asp-action="Create" method="post">
                         <div class="form-group">
-                            <label for="name">Name *</label>
+                            <label for="name">Tên *</label>
                             <input type="text" class="form-control" asp-for="BlogComment.Name">
                         </div>
                         <div class="form-group">
@@ -139,16 +111,16 @@
                             <input type="email" class="form-control" asp-for="BlogComment.Email">
                         </div>
                         <div class="form-group">
-                            <label for="number">Number</label>
+                            <label for="number">Số điện thoại</label>
                             <input type="text" class="form-control" asp-for="BlogComment.Phone">
                         </div>
 
                         <div class="form-group">
-                            <label for="message">Message *</label>
+                            <label for="message">Bình luận *</label>
                             <textarea asp-for="BlogComment.Detail" cols="30" rows="5" class="form-control"></textarea>
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Post Comment" class="btn custom-btn">
+                            <input type="submit" value="Bình luận" class="btn custom-btn">
                         </div>
                         <input type="hidden" asp-for="BlogComment.CreatedDate" value="@Functions.getCurrentDate()" />
                         <input type="hidden" asp-for="BlogComment.IsActive" value="True" />
@@ -159,7 +131,7 @@
 
             <div class="col-lg-4">
                 <div class="sidebar">
-                    <div class="sidebar-widget">
+                    <div class="sidebar-widget d-none">
                         <div class="search-widget">
                             <form>
                                 <input class="form-control" type="text" placeholder="Search Keyword">
@@ -171,214 +143,6 @@
                     <!--Recent Post -->
                     @await Component.InvokeAsync("RecentPost")
                     <!--Recent Post End -->
-
-
-
-                    <div class="sidebar-widget">
-                        <div class="tab-post">
-                            <ul class="nav nav-pills nav-justified">
-                                <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="pill" href="#featured">Featured</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="pill" href="#popular">Popular</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="pill" href="#latest">Latest</a>
-                                </li>
-                            </ul>
-
-                            <div class="tab-content">
-                                <div id="featured" class="container tab-pane active">
-                                    <div class="post-item">
-                                        <div class="post-img">
-                                            <img src="img/post-1.jpg" />
-                                        </div>
-                                        <div class="post-text">
-                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                            <div class="post-meta">
-                                                <p>By<a href="">Admin</a></p>
-                                                <p>In<a href="">Web Design</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="post-item">
-                                        <div class="post-img">
-                                            <img src="img/post-2.jpg" />
-                                        </div>
-                                        <div class="post-text">
-                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                            <div class="post-meta">
-                                                <p>By<a href="">Admin</a></p>
-                                                <p>In<a href="">Web Design</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="post-item">
-                                        <div class="post-img">
-                                            <img src="img/post-3.jpg" />
-                                        </div>
-                                        <div class="post-text">
-                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                            <div class="post-meta">
-                                                <p>By<a href="">Admin</a></p>
-                                                <p>In<a href="">Web Design</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="post-item">
-                                        <div class="post-img">
-                                            <img src="img/post-4.jpg" />
-                                        </div>
-                                        <div class="post-text">
-                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                            <div class="post-meta">
-                                                <p>By<a href="">Admin</a></p>
-                                                <p>In<a href="">Web Design</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="post-item">
-                                        <div class="post-img">
-                                            <img src="img/post-5.jpg" />
-                                        </div>
-                                        <div class="post-text">
-                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                            <div class="post-meta">
-                                                <p>By<a href="">Admin</a></p>
-                                                <p>In<a href="">Web Design</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="popular" class="container tab-pane fade">
-                                    <div class="post-item">
-                                        <div class="post-img">
-                                            <img src="img/post-1.jpg" />
-                                        </div>
-                                        <div class="post-text">
-                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                            <div class="post-meta">
-                                                <p>By<a href="">Admin</a></p>
-                                                <p>In<a href="">Web Design</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="post-item">
-                                        <div class="post-img">
-                                            <img src="img/post-2.jpg" />
-                                        </div>
-                                        <div class="post-text">
-                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                            <div class="post-meta">
-                                                <p>By<a href="">Admin</a></p>
-                                                <p>In<a href="">Web Design</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="post-item">
-                                        <div class="post-img">
-                                            <img src="img/post-3.jpg" />
-                                        </div>
-                                        <div class="post-text">
-                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                            <div class="post-meta">
-                                                <p>By<a href="">Admin</a></p>
-                                                <p>In<a href="">Web Design</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="post-item">
-                                        <div class="post-img">
-                                            <img src="img/post-4.jpg" />
-                                        </div>
-                                        <div class="post-text">
-                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                            <div class="post-meta">
-                                                <p>By<a href="">Admin</a></p>
-                                                <p>In<a href="">Web Design</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="post-item">
-                                        <div class="post-img">
-                                            <img src="img/post-5.jpg" />
-                                        </div>
-                                        <div class="post-text">
-                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                            <div class="post-meta">
-                                                <p>By<a href="">Admin</a></p>
-                                                <p>In<a href="">Web Design</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="latest" class="container tab-pane fade">
-                                    <div class="post-item">
-                                        <div class="post-img">
-                                            <img src="img/post-1.jpg" />
-                                        </div>
-                                        <div class="post-text">
-                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                            <div class="post-meta">
-                                                <p>By<a href="">Admin</a></p>
-                                                <p>In<a href="">Web Design</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="post-item">
-                                        <div class="post-img">
-                                            <img src="img/post-2.jpg" />
-                                        </div>
-                                        <div class="post-text">
-                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                            <div class="post-meta">
-                                                <p>By<a href="">Admin</a></p>
-                                                <p>In<a href="">Web Design</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="post-item">
-                                        <div class="post-img">
-                                            <img src="img/post-3.jpg" />
-                                        </div>
-                                        <div class="post-text">
-                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                            <div class="post-meta">
-                                                <p>By<a href="">Admin</a></p>
-                                                <p>In<a href="">Web Design</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="post-item">
-                                        <div class="post-img">
-                                            <img src="img/post-4.jpg" />
-                                        </div>
-                                        <div class="post-text">
-                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                            <div class="post-meta">
-                                                <p>By<a href="">Admin</a></p>
-                                                <p>In<a href="">Web Design</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="post-item">
-                                        <div class="post-img">
-                                            <img src="img/post-5.jpg" />
-                                        </div>
-                                        <div class="post-text">
-                                            <a href="">Lorem ipsum dolor sit amet consec adipis elit</a>
-                                            <div class="post-meta">
-                                                <p>By<a href="">Admin</a></p>
-                                                <p>In<a href="">Web Design</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="sidebar-widget">
                         <div class="image-widget">
                             <a href="#"><img src="img/blog-2.jpg" alt="Image"></a>
@@ -386,12 +150,15 @@
                     </div>
 
                     <div class="sidebar-widget">
-                        <h2 class="widget-title">Categories</h2>
+                        <h2 class="widget-title">Loại bài viết</h2>
                         <div class="category-widget">
                             <ul>
                                 @foreach (var item in category)
                                 {
-                                    <li><a href="">@item.Title</a><span>(1)</span></li>
+                                    var count = (from bl in blog
+                                                where (bl.CategoryId == item.CategoryId)
+                                                select bl).Count();
+                                    <li><a href="/Blog?searchString=@item.CategoryId">@item.Title</a><span>(@count)</span></li>
                                 }
                             </ul>
                         </div>
@@ -408,12 +175,12 @@
                         <div class="tag-widget">
                             @foreach (var item in category)
                             {
-                                <a href="">@item.Title</a>
+                                <a href="/Blog?searchString=@item.CategoryId">@item.Title</a>
                             }
                         </div>
                     </div>
 
-                    <div class="sidebar-widget">
+                    <div class="sidebar-widget d-none">
                         <h2 class="widget-title">Text Widget</h2>
                         <div class="text-widget">
                             <p>

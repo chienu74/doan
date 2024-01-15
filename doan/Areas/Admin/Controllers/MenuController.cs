@@ -62,7 +62,7 @@ namespace doan.Areas.Admin.Controllers
                           }).ToList();
             mnList.Insert(0, new SelectListItem()
             {
-                Text = "----Select----",
+                Text = "----Chọn----",
                 Value = "0"
             });
             ViewBag.mnList = mnList;
@@ -103,7 +103,7 @@ namespace doan.Areas.Admin.Controllers
                           }).ToList();
             mnList.Insert(0, new SelectListItem()
             {
-                Text = "----Select----",
+                Text = "----Chọn----",
                 Value = string.Empty
             });
             ViewBag.mnList = mnList;

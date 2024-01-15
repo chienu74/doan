@@ -17,7 +17,7 @@ namespace doan.Areas.Admin.Controllers
         {
             _context = context;
         }
-        public IActionResult Index(int? page)
+        public IActionResult Index(int? page) 
         {
             if (!Functions.IsLogin())
                 return RedirectToAction("Index", "Login");
@@ -53,10 +53,23 @@ namespace doan.Areas.Admin.Controllers
                               }).ToList();
             prdcatList.Insert(0, new SelectListItem()
             {
-                Text = "----Select----",
+                Text = "----Chọn----",
                 Value = "0"
             });
             ViewBag.prdcatList = prdcatList;
+            var discoutList = (from m in _context.Discounts
+                               select new SelectListItem()
+                               {
+                                   Text = "Giảm " + m.DiscountRate.ToString() + "%",
+                                   Value = m.DiscountsId.ToString()
+                               }).ToList();
+            discoutList.Insert(0, new SelectListItem()
+            {
+                Text = "----Chọn-----",
+                Value = string.Empty
+            });
+
+            ViewBag.discoutList = discoutList;
             return View();
         }
         [HttpPost]
@@ -94,10 +107,23 @@ namespace doan.Areas.Admin.Controllers
                            }).ToList();
             catList.Insert(0, new SelectListItem()
             {
-                Text = "----Select----",
+                Text = "----Chọn----",
                 Value = string.Empty
             });
+            var discoutList = (from m in _context.Discounts
+                               select new SelectListItem()
+                               {
+                                   Text = "Giảm "+ m.DiscountRate.ToString() +"%",
+                                   Value = m.DiscountsId.ToString()
+                               }).ToList();
+            discoutList.Insert(0, new SelectListItem()
+            {
+                Text = "----Chọn-----",
+                Value = string.Empty
+            });
+
             ViewBag.catList = catList;
+            ViewBag.discoutList = discoutList;
             return View(mn);
         }
         [HttpPost]

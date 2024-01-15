@@ -16,7 +16,7 @@
                     string active = "";
                     var menuId = menu.MenuId;
                     var menuChild = Model.Where(m => m.ParentId == menuId);
-                    if (menu.MenuName == ViewBag.Active)
+                    if (menu.Alias == ViewBag.Active)
                     {
                         active = "active";
                     }
@@ -26,7 +26,7 @@
                             @menu.MenuName
                         </a>
 
-                        @if (menu.MenuName == "Booking")
+                        @if (menu.Alias == "Booking")
                         {
                             <span class="quantity" id="count"></span>
                         }
@@ -100,15 +100,23 @@
                 var item = jsonArray[i];
                 sum += item.quantity;
             }
+        }
+        console.log("----");
+        console.log(sum);
+        console.log("----");
 
-            console.log(sum);
+        var elementId = "count";
+        var element = document.getElementById(elementId);
 
-            var elementId = "count";
-            var element = document.getElementById(elementId);
-            if (element) {
+        if (element) {
+            if (sum == undefined) {
+                element.style.display = "none"; // Ẩn thẻ nếu sum = 0
+            } else {
+                element.style.display = "block"; // Hiển thị thẻ nếu sum khác 0
                 element.textContent = sum.toString();
             }
         }
+
     }
     calculateSum();
 

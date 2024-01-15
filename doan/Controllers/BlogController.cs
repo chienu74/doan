@@ -2,10 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using doan.Models;
 using X.PagedList;
-using Microsoft.CodeAnalysis.Scripting;
-using System.Security.Cryptography;
-using System.Xml.Linq;
-using doan.Models.ho;
 
 namespace doan.Controllers
 {
@@ -17,12 +13,21 @@ namespace doan.Controllers
         {
             _context = context;
         }
-        public IActionResult Index(int? page = 1)
+        public IActionResult Index(int? page, string? searchString)
         {
+            var pageNumber = page ?? 1;
             int pageSize = 6;
-            var bl = _context.Blogs.Where(m => (m.IsActive) == true).OrderByDescending(n => n.BlogId).ToPagedList((int)page, pageSize);
+            IQueryable<Blog> blogs = _context.Blogs.OrderByDescending(m=>m.BlogId);
+            if(!string.IsNullOrEmpty(searchString) )
+            {
+                blogs = blogs.Where(m => m.CategoryId.ToString().Contains(searchString));
+            }
+            IOrderedQueryable<Blog> or = blogs.OrderByDescending(m => m.BlogId);
+
+            var paged = or.ToPagedList(pageNumber,pageSize);
             ViewBag.blogcomment = _context.BlogComments.ToList();
-            return View(bl);
+            ViewBag.category = _context.Categories.ToList();
+            return View(paged);
         }
 
         public class Blog_BlogComment
@@ -50,6 +55,7 @@ namespace doan.Controllers
             };
             ViewBag.blogcomment = _context.BlogComments.Where(m => m.BlogId == id).ToList();
             ViewBag.category = _context.Categories.ToList();
+            ViewBag.blog = _context.Blogs.ToList();
             return View(blog_blogComment);
         }
         [HttpPost]
@@ -62,7 +68,7 @@ namespace doan.Controllers
                 _context.SaveChanges();
                 TempData["AlertMessage"] = "Bình luận thành công";
             }
-            return Redirect("/blog-slug-"+blvm.BlogComment.BlogId +".html");
+            return Redirect("/blog-slug-" + blvm.BlogComment.BlogId + ".html");
         }
     }
 }

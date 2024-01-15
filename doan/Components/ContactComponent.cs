@@ -11,15 +11,8 @@ namespace doan.Components
         {
             _context = context;
         }
-        public async Task<IViewComponentResult> InvokeAsync(/*Contact ct*/)
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-/*            if (ModelState.IsValid)
-            {
-                _context.Contacts.Add(ct);
-                _context.SaveChanges();
-                TempData["AlertMessage"] = "Tạo mới thành công";
-            }
-*/
             return await Task.FromResult((IViewComponentResult)View());
         }
     }

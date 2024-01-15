@@ -10,7 +10,6 @@
 <div class="app-wrapper">
     <div class="app-content pt-3 p-md-3 p-lg-4">
         <div class="container-xl">
-            <h1 class="app-page-title">  @ViewData["Controller"] / @ViewData["Action"]  </h1>
             <p>
                 <a type="buton" class="btn btn-success" asp-area="Admin" asp-controller="Slide" asp-action="Create">
                     <i class="bi bi-file-earmark-text me-1"></i>
@@ -42,7 +41,7 @@
                                 <td>@Html.DisplayFor(modelItem => item.CreatedBy)</td>
                                 <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.SlideId" class="btn mr-1 mb-1 btn-success">Edit</a>
+                                    <a asp-action="Edit" asp-route-id="@item.SlideId" class="btn mr-1 mb-1 btn-success">Sửa</a>
                                     <form asp-action="Delete" method="post" id="deleteForm-@item.SlideId">
                                         <input class="d-none" value="@item.SlideId" name="id">
                                         <input class="btn mr-1 mb-1 btn-danger" type="submit" value="Xóa" onclick="confirmDelete(event,@item.SlideId)">

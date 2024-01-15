@@ -1,0 +1,41 @@
+﻿@model List<doan.Areas.Admin.Controllers.OrderController.OrderList>
+
+@{
+    ViewData["Controller"] = "Order";
+    ViewData["Action"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="app-wrapper">
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="container-xl">
+            <table class="table">
+                <tr>
+                    <th></th>
+                    <th>Khách hàng</th>
+                    <th>Tình trạng</th>
+                    <th>Thời gian đặt</th>
+                    <th>Tổng tiền</th>
+                    <th></th>
+                </tr>
+                @{
+                    int i = 1;
+                }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.UserName</td>
+                        <td>@item.OrderStatusName</td>
+                        <td>@item.OrderDate.Value.ToString("dd/MM/yyyy hh:d:s")</td>
+                        <th>@item.TotalAmount</th>
+                        <td>
+                            <a asp-action="OrderDetail" asp-route-id="@item.OrderId"
+                               class="btn mr-1 mb-1 btn-success">Chi tiết</a>
+                        </td>
+                    </tr>
+                    i++;
+                }
+            </table>
+        </div>
+    </div>
+</div>

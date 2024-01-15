@@ -12,6 +12,7 @@ namespace doan.Models
         public int OrderId { get; set; }
         public int? CustomerId { get; set; }
         public int? OrderStatusId { get; set; }
+        public double? TotalAmount {  get; set; }
         public DateTime? CreatedDate { get; set; }
         public string? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }

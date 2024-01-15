@@ -10,16 +10,15 @@
 <div class="app-wrapper">
     <div class="app-content pt-3 p-md-3 p-lg-4">
         <div class="container-xl">
-            <h1 class="app-page-title">  @ViewData["Controller"] / @ViewData["Action"]  </h1>
             <form asp-action="Edit" method="post">
 
                 <input asp-for="SlideId" class="d-none" />
 
                 <div class="form-group col-md-12">
-                    <label class="control-label">Images</label>
+                    <label class="control-label">Ảnh</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <button class="btn btn-success" type="button" onclick="openDialog()">Choose a pic</button>
+                            <button class="btn btn-success" type="button" onclick="openDialog()">Chọn ảnh</button>
                         </div>
                         <input type="text" class="form-control" asp-for="SlideImage" id="file_input">
                     </div>
@@ -42,7 +41,7 @@
                 <div class="form-group">
                     <label>
                         @Html.CheckBox("IsActive",Model.IsActive)
-                        IsActive
+                        Ẩn/Hiện
                     </label>
                 </div>
                 <div class="form-group">
@@ -50,7 +49,7 @@
                 </div>
             </form>
             <div>
-                <a asp-action="Index" style="color: #198754; text-decoration: none;">Back to List</a>
+                <a asp-action="Index" style="color: #198754; text-decoration: none;"> <i class="fa-solid fa-arrow-left"></i> Quay lại</a>
             </div>
         </div>
     </div>

@@ -19,34 +19,34 @@
                     <span asp-validation-for="MenuName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Alias" class="control-label"></label>
+                    <label asp-for="Alias" class="control-label">Bí danh</label>
                     <input asp-for="Alias" class="form-control" />
                     <span asp-validation-for="Alias" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Description" class="control-label"></label>
+                    <label asp-for="Description" class="control-label">Miêu tả</label>
                     <input asp-for="Description" class="form-control" />
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Levels" class="control-label"></label>
+                    <label asp-for="Levels" class="control-label">Bậc menu</label>
                     <input asp-for="Levels" class="form-control" />
                     <span asp-validation-for="Levels" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ParentId" class="control-label">Chọn menu cha</label>
+                    <label asp-for="ParentId" class="control-label">Menu cha</label>
                     <select asp-for="ParentId" class="form-control"
                             asp-items="@(new SelectList(ViewBag.mnList, "Value","Text"))">
                     </select>
                     <span asp-validation-for="ParentId" class="alert-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Position" class="control-label"></label>
+                    <label asp-for="Position" class="control-label">Thứ tự</label>
                     <input asp-for="Position" class="form-control" />
                     <span asp-validation-for="Position" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Link" class="control-label"></label>
+                    <label asp-for="Link" class="control-label">Đường dẫn</label>
                     <input asp-for="Link" class="form-control" />
                     <span asp-validation-for="Link" class="text-danger"></span>
                 </div>
@@ -67,15 +67,15 @@
                 <div class="form-group">
                     <label>
                         @Html.CheckBox("IsActive",false)
-                        IsActive
+                        Ẩn/Hiện
                     </label>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-success" />
+                    <input type="submit" value="Tạo mới" class="btn btn-success" />
                 </div>
             </form>
             <div>
-                <a asp-action="Index">Back to List</a>
+                <a asp-action="Index"> <i class="fa-solid fa-arrow-left"></i> Quay lại</a>
             </div>
         </div>
     </div>

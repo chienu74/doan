@@ -29,11 +29,9 @@ namespace doan.Areas.Admin.Controllers
                 {
                     upimg.CopyTo(fileStream);
                 }
+                var account = _context.Accounts.Find(Functions._AccountID);
 
-                // Cập nhật trường "Avatar" của đối tượng "Account"
-                var account = _context.Accounts.Find(Functions._AccountID); // Đây chỉ là ví dụ, bạn cần tìm đúng đối tượng "Account" tương ứng với người dùng đang tải lên hình ảnh
-                account.Avatar = "/files/avatar/" + fileName; // Lưu đường dẫn tương đối của hình ảnh
-
+                account.Avatar = "/files/avatar/" + fileName;
                 _context.Update(account);
                 _context.SaveChanges();
             }
@@ -64,5 +62,25 @@ namespace doan.Areas.Admin.Controllers
             }
             return View(account);
         }
+        [HttpPost]
+        public IActionResult EditPassword(int id, string newpassword)
+        {
+            if (ModelState.IsValid)
+            {
+                string newPW = Functions.MD5Password(newpassword);
+                //update
+                var account = _context.Accounts.FirstOrDefault(m => m.AccountId == id);
+                if (account != null)
+                {
+                    account.Password = newPW;
+                    _context.SaveChanges();
+                    return RedirectToAction("Logout","Home");
+                }
+            }
+			TempData["AlertMessage2"] = "Không đổi mật khẩu thì đùng có mà nhấp lung tung";
+			return RedirectToAction("Index");
+
+        }
+
     }
 }

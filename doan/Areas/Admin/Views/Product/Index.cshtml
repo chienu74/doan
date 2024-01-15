@@ -14,7 +14,7 @@
             <p>
                 <a type="buton" class="btn btn-success" asp-area="Admin" asp-controller="Product" asp-action="Create">
                     <i class="bi bi-file-earmark-text me-1"></i>
-                    Thêm bài viết
+                    Thêm sản phẩm
                 </a>
                 <a type="buton" class="btn btn-success" asp-area="Admin" asp-controller="ProductCategory" asp-action="Index">
                     <i class="bi bi-file-earmark-text me-1"></i>
@@ -29,7 +29,7 @@
                             <th scope="col">Ảnh</th>
                             <th scope="col">Tiêu đề</th>
                             <th scope="col"> Giá </th>
-                            <th scope="col">Nguời sửa</th>
+                            <th scope="col">Nguời tạo</th>
                             <th scope="col">Ẩn hiện</th>
                             <th scope="col"></th>
                         </tr>
@@ -47,7 +47,7 @@
                                 </td>
                                 <td>@Html.DisplayFor(modelItem => item.Title)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Price)</td>
-                                <td>@Html.DisplayFor(modelItem => item.ModifiedBy)</td>
+                                <td>@Html.DisplayFor(modelItem => item.CreatedBy)</td>
                                 <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
                                 <td>
                                     <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn mr-1 mb-1 btn-success">Sửa</a>

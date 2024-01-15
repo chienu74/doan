@@ -9,15 +9,19 @@
 <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
     <ul class="app-menu list-unstyled accordion" id="menu-accordion">
         @{
-            string active = "active";
+            string active = "";
+            if ((string)ViewData["Controller"] == "Home")
+            {
+                active = "active";
+            }
         }
         <li class="nav-item">
             <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-            <a class="nav-link" href="/Admin">
+            <a class="nav-link @active" href="/Admin">
                 <span class="nav-icon">
                     <i class="fa-solid fa-house-user fa-2xl"></i>
                 </span>
-                <span class="nav-link-text">Overview</span>
+                <span class="nav-link-text">Tổng Quan</span>
             </a><!--//nav-link-->
         </li><!--//nav-item-->
         @foreach (var item in Model.Where(m => m.ItemLevel == 1).OrderBy(n => n.ItemOrder))
@@ -37,6 +41,18 @@
             var Pid = item.AdminMenuId;
             var Smenu = Model.Where(p => p.ParentLevel == Pid).OrderBy(p => p.ItemOrder).ToList();
             <li class="nav-item has-submenu">
+                @if(Smenu.Count == 0)
+                {
+                    <a class="nav-link @active1" href="/Admin/@item.ControllerName/@item.ActionName">
+                        <span class="nav-icon">
+                            <i class="@item.Icon"></i>
+                        </span>
+                        <span class="nav-link-text">@item.ItemName</span>
+                    </a>
+                }
+                else
+                {
+                    
                 <a id="fixa" class="nav-link submenu-toggle @active1" href="#" data-bs-toggle="collapse" data-bs-target="#@item.IdName" aria-expanded="false" aria-controls="submenu-1">
                     <span class="nav-icon">
                         <i class="@item.Icon"></i>
@@ -62,11 +78,12 @@
                         }
                     </ul>
                 </div>
+                }
             </li>
 
             <!--//nav-item-->
         }
-        <li class="nav-item">
+        <li class="nav-item d-none">
             <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
             <a class="nav-link" href="help.html">
                 <span class="nav-icon">

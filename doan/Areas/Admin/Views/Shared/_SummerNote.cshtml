@@ -9,7 +9,7 @@
     <script src="/admin/lib/elFinder/js/elfinder.min.js"></script>
     
 
-    <link rel="stylesheet" href="~/admin/lib/bootstrap.css" />
+    //<link rel="stylesheet" href="~/admin/lib/bootstrap.css" />
     
     <link rel="stylesheet" href="~/admin/lib/snote/summernote-bs4.css" />
     
@@ -115,58 +115,7 @@
         }).dialogelfinder('instance');
     }
 
-    function openDialog() {
-        var fm = $('<div/>').dialogelfinder({
-            baseUrl: "@Url.Content("~/admin/lib/elFinder/")",
-            url: '/Admin/el-finder-file-system/connector',
-            lang: 'vi',
-            width: 840,
-            height: 450,
-            destroyOnClose: true,
-            closeOnEditorCallback: true,
-            getFileCallback: function (files) {
-                document.getElementById('file_input').value = files.url;
-            },
-            commandsOptions: {
-                getfile: {
-                    oncomplete: 'close',
-                    folders: false
-                }
-            },
-            uiOptions: {
-                //toolbar configuration
-                toolbar: [
-                    ['home', 'back', 'forward', 'up', 'reload'],
-                    ['mkdir', 'mkfile', 'upload'],
-                    ['open', 'download', 'getfile'],
-                    ['undo', 'redo'],
-                    ['copy', 'cut', 'paste', 'delete'],
-                    ['duplicate', 'rename', 'edit', 'resize', 'chmod'],
-                    ['selectall', 'selectnone', 'selectinvert'],
-                    ['quicklook', 'info'],
-                    ['extract', 'archive'],
-                    ['search'],
-                    ['view', 'sort'],
-                    ['fullscreen']
-                ]
-            },
-            contextmenu: {
-                //navbarfolder menu
-                navbar: ['open', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', '|', 'info'],
-
-                // current directory menu
-                cwd: ['reload', 'back', '|', 'upload', 'mkdir', 'mkfile', 'paste', '|', 'info'],
-
-                //current directory file menu
-                files: [
-                    'getfile', '|', 'open', 'quicklook', '|', 'download', '|', 'copy', 'cut', 'paste', 'duplicate', '|',
-                    'rm', '|', 'edit', 'rename', 'resize', '|', 'archive', 'extract', '|', 'info'
-                ]
-            },
-            onlyMimes: ["image"],
-        }).dialogelfinder('instance');
-    }
-
+  
     $(document).ready(function () {
         $('@Model.IDEditor').summernote({
             height: @Model.Height,

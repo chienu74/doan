@@ -2,7 +2,7 @@
 @using doan.Utilities;
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Controller"] = "Product";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 <div class="app-wrapper">
@@ -15,12 +15,12 @@
                     <input asp-for="ProductId" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label asp-for="Title" class="control-label"></label>
+                    <label asp-for="Title" class="control-label">Tên sản phẩm</label>
                     <input asp-for="Title" class="form-control" />
                     <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Alias" class="control-label"></label>
+                    <label asp-for="Alias" class="control-label">Bí danh</label>
                     <input asp-for="Alias" class="form-control" />
                     <span asp-validation-for="Alias" class="text-danger"></span>
                 </div>
@@ -32,26 +32,33 @@
                     <span asp-validation-for="CategoryProductId" class="alert-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Description" class="control-label"></label>
+                    <label asp-for="DiscountsId" class="control-label">Giảm giá</label>
+                    <select asp-for="DiscountsId" class="form-control"
+                            asp-items="@(new SelectList( ViewBag.discoutList, "Value","Text"))">
+                    </select>
+                    <span asp-validation-for="DiscountsId" class="alert-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label">Mô tả</label>
                     <input asp-for="Description" class="form-control" />
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Price" class="control-label"></label>
+                    <label asp-for="Price" class="control-label">Giá</label>
                     <input asp-for="Price" class="form-control" />
                     <span asp-validation-for="Price" class="text-danger"></span>
                 </div>
                 <div class="form-group col-md-12">
-                    <label class="control-label">Images</label>
+                    <label class="control-label">Ảnh</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <button class="btn btn-success" type="button" onclick="openDialog()">Choose a pic</button>
+                            <button class="btn btn-success" type="button" onclick="openDialog()">Chọn ảnh</button>
                         </div>
                         <input type="text" class="form-control" asp-for="Image" id="file_input">
                     </div>
                 </div>
                 <div class="form-group col-md-12">
-                    <label asp-for="Detail" class="control-label">Detail</label>
+                    <label asp-for="Detail" class="control-label">Chi tiết</label>
                     <textarea asp-for="Detail" class="form-control"></textarea>
                 </div>
 
@@ -62,7 +69,7 @@
                     <input asp-for="CreatedDate" class="form-control" />
                 </div>
                 <div class="form-group d-none">
-                    <input asp-for="ModifiedBy" class="form-control" value="@Functions._UserName" /><!--sau lấy uses name admin vô-->
+                    <input asp-for="ModifiedBy" class="form-control" value="@Functions._UserName" />
                 </div>
                 <div class="form-group d-none">
                     <input asp-for="ModifiedDate" class="form-control" value="@Functions.getCurrentDate()" />
@@ -71,15 +78,15 @@
                 <div class="form-group">
                     <label>
                         @Html.CheckBox("IsActive",Model.IsActive)
-                        IsActive
+                        Ẩn/Hiện
                     </label>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-success" />
+                    <input type="submit" value="Lưu" class="btn btn-success" />
                 </div>
             </form>
             <div>
-                <a asp-action="Index">Back to List</a>
+                <a asp-action="Index" style="color: #198754; text-decoration: none;"> <i class="fa-solid fa-arrow-left"></i> Quay lại</a>
             </div>
         </div>
     </div>

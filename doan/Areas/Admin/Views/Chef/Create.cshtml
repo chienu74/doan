@@ -1,0 +1,58 @@
+﻿@using doan.Utilities;
+@model doan.Models.Chef
+
+@{
+    ViewData["Controller"] = "Chef";
+    ViewData["Action"] = "Create";
+
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="app-wrapper">
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="container-xl">
+            <form asp-action="Create" method="post">
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label">Tên đầu bếp </label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label">Miêu tả</label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Position" class="control-label"></label>
+                    <input asp-for="Position" class="form-control" />
+                    <span asp-validation-for="Position" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="control-label">Ảnh</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-success" type="button" onclick="openDialog()">Chọn ảnh</button>
+                        </div>
+                        <input type="text" class="form-control" asp-for="Image" id="file_input">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>
+                        @Html.CheckBox("IsActive",false)
+                        Ẩn/Hiện
+                    </label>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success" type="submit">Thêm đầu bếp</button>
+                </div>
+            </form>
+            <div>
+                <a asp-action="Index" style="color: #198754; text-decoration: none;"> <i class="fa-solid fa-arrow-left"></i> Quay lại</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    var summerNote = new doan.Areas.Admin.Models.SummerNote("#Detail");
+    <partial name="_SummerNote" model="summerNote" />
+}

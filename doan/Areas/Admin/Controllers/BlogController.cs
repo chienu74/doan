@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using doan.Models;
-using Microsoft.EntityFrameworkCore;
-using doan.Areas.Admin.Models;
 using X.PagedList;
 using doan.Utilities;
 
@@ -53,7 +51,7 @@ namespace doan.Areas.Admin.Controllers
                            }).ToList();
             catList.Insert(0, new SelectListItem()
             {
-                Text = "----Select----",
+                Text = "----Chọn----",
                 Value = "0"
             });
             ViewBag.catList = catList;
@@ -94,7 +92,7 @@ namespace doan.Areas.Admin.Controllers
                            }).ToList();
             catList.Insert(0, new SelectListItem()
             {
-                Text = "----Select----",
+                Text = "----Chọn----",
                 Value = string.Empty
             });
             ViewBag.catList = catList;

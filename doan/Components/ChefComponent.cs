@@ -13,11 +13,10 @@ namespace doan.Components
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var listChef = (from c in _context.Chefs
-                            where (c.IsActive == true) && (c.Status == 1)
+                            where (c.IsActive == true)
                             orderby c.ChefID descending
-                            select c).Take(3).ToList();
-            return await Task.FromResult((IViewComponentResult)View("Default", listChef
-                ));
+                            select c).Take(4).ToList();
+            return await Task.FromResult((IViewComponentResult)View("Default", listChef));
         }
     }
 }

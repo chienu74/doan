@@ -1,4 +1,4 @@
-﻿@model doan.Controllers.BookingController.CheckOut;
+﻿@model doan.Controllers.BookingController.Booking;
 @{
     ViewBag.Active = "Booking";
     IList<Cart> cart = ViewBag.CartItems;
@@ -9,11 +9,11 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h2>Book A Table</h2>
+                <h2>Đặt hàng</h2>
             </div>
             <div class="col-12">
-                <a href="">Home</a>
-                <a href="">Booking</a>
+                <a href="">Trang chủ</a>
+                <a href="">Đặt hàng</a>
             </div>
         </div>
     </div>
@@ -27,17 +27,16 @@
                 <div class="col-lg-7">
                     <div class="booking-content">
                         <div class="section-header">
-                            <p>Book A Table</p>
-                            <h2>Book Your Table For Private Dinners & Happy Hours</h2>
+                            <p>Đặt món ngay</p>
                         </div>
-                        <h1> @ViewBag.Count </h1>
+                       @*  <h1> @ViewBag.Count </h1> *@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Image</th>
-                                    <th>Title</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
+                                    <th>Hình ảnh</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Giá</th>
+                                    <th>Số lượng</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,6 +69,7 @@
                 {
                     <input class="d-none" name="OrderDetail[@i].ProductId" value="@item.ProductId" />
                     <input class="d-none" name="OrderDetail[@i].Quantity" value="@item.Quantity" />
+                    <input class="d-none" name="OrderDetail[@i].Price" value="@item.Price" />
                     i++;
                 }
                 <div class="col-lg-5">
@@ -114,8 +114,9 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="hidden" asp-for="Customer.IsActive" value="True"/>
                         <div>
-                            <button class="btn custom-btn" type="submit">Book Now</button>
+                            <button class="btn custom-btn" type="submit">Đặt ngay</button>
                         </div>
                     </div>
                 </div>

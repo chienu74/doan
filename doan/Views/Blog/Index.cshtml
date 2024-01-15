@@ -6,6 +6,7 @@
 @{
     ViewBag.Active = "Blog";
     List<BlogComment> listComment = ViewBag.blogcomment;
+    List<Category> cat = ViewBag.category;
 }
 <style>
     .thugond {
@@ -27,11 +28,11 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h2>Food Blog</h2>
+                <h2>Bài viết</h2>
             </div>
             <div class="col-12">
-                <a href="">Home</a>
-                <a href="">Blog</a>
+                <a href="">Trang Chủ</a>
+                <a href="">Bài viết</a>
             </div>
         </div>
     </div>
@@ -41,14 +42,15 @@
 <div class="blog">
     <div class="container">
         <div class="section-header text-center">
-            <p>Food Blog</p>
-            <h2>Latest From Food Blog</h2>
+            <p>Bài viết</p>
+            <h2>Bài viết mới nhất</h2>
         </div>
         <div class="row">
             @foreach (var item in Model)
             {
                 var blogId = item.BlogId;
                 var commentCount = listComment.Where(m => m.BlogId == item.BlogId);
+                string Cat = cat.Where(m => m.CategoryId == item.CategoryId).First().Title;
                 string url = Functions.TitleSlugGeneration("blog", item.Title, item.BlogId);
                 <div class="col-md-6">
                     <div class="blog-item">
@@ -58,8 +60,8 @@
                         <div class="blog-content">
                             <h2 class="blog-title thugont">@item.Title</h2>
                             <div class="blog-meta">
-                                <p><i class="far fa-user"></i>Admin</p>
-                                <p><i class="far fa-list-alt"></i>Food</p>
+                                <p><i class="far fa-user"></i>@item.CreatedBy</p>
+                                <p><i class="far fa-list-alt"></i>@Cat</p>
                                 <p><i class="far fa-calendar-alt"></i>@item.CreatedDate.ToString("dd/MM/yyyy")</p>
                                 <p><i class="far fa-comments"></i> @commentCount.Count()</p>
                             </div>

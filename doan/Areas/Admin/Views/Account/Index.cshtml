@@ -9,8 +9,22 @@
 
     <div class="app-content pt-3 p-md-3 p-lg-4">
         <div class="container-xl">
-
-            <h1 class="app-page-title">My Account</h1>
+            @if (TempData["AlertMessage2"] != null)
+            {
+                <div id="myElement" class="alert alert-danger" style="position:fixed; right:0px; z-index:1000">
+                    <strong>
+                        @TempData["AlertMessage2"]
+                    </strong>
+                </div>
+            }
+            <script>
+                var myElement = document.getElementById("myElement");
+                // Ẩn phần tử sau 1 giây
+                setTimeout(function () {
+                    myElement.style.display = "none";
+                }, 3000);
+            </script>
+            <h1 class="app-page-title">Tài khoản của tôi</h1>
             <div class="row gy-4">
                 <div class="col-12 col-lg-6">
                     <div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
@@ -25,35 +39,37 @@
 
                                 </div><!--//col-->
                                 <div class="col-auto">
-                                    <h4 class="app-card-title">Profile</h4>
+                                    <h4 class="app-card-title">Hồ sơ</h4>
                                 </div><!--//col-->
                             </div><!--//row-->
                         </div><!--//app-card-header-->
                         <div class="app-card-body px-4 w-100">
-                            <form asp-action="Upload" enctype="multipart/form-data" id="form2">
+
+                            <form asp-action="Upload" enctype="multipart/form-data">
                                 <input class="d-none" type="file" name="upimg" id="upimg" onchange="previewImage(event)" /><!-- chuyển src của img -->
                             </form>
 
-                            <form asp-action="Edit" class="col-md-12" id="form1">
+                            <form asp-action="Edit" class="col-md-12">
                                 <input asp-for="AccountId" class="d-none" />
                                 <input asp-for="Password" class="d-none" />
                                 <input asp-for="IsActive" class="d-none" />
                                 <input asp-for="LastLogin" class="d-none" />
                                 <input asp-for="RoleId" class="d-none" />
-                                <input asp-for="FullName" class="d-none" />
-
-
-
                                 <div>
                                     <img src="@Model.Avatar" class="profile-image" id="preview-img" style=" object-fit: cover; object-position: top center;border-radius:50%; width: 150px;  height: 150px; " />
                                     <input id="input" asp-for="Avatar" class="d-none" />
-                                    <a class="btn-sm app-btn-secondary" href="#" onclick="changeImage()">Change</a><!-- click mở input(upimg) -->
+                                    <a class="btn-sm app-btn-secondary" href="#" onclick="changeImage()">Thay đổi</a><!-- click mở input(upimg) -->
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="Username" class="control-label"></label>
+                                    <label asp-for="Username" class="control-label">Tên đăng nhập</label>
                                     <input asp-for="Username" class="form-control" />
                                     <span asp-validation-for="Username" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="FullName" class="control-label">Tên đầy đủ </label>
+                                    <input asp-for="FullName" class="form-control" />
+                                    <span asp-validation-for="FullName" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="Email" class="control-label"></label>
@@ -61,16 +77,14 @@
                                     <span asp-validation-for="Email" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="Phone" class="control-label"></label>
+                                    <label asp-for="Phone" class="control-label">Số điện thoại</label>
                                     <input asp-for="Phone" class="form-control" />
                                     <span asp-validation-for="Phone" class="text-danger"></span>
                                 </div>
                             </form>
                         </div><!--//app-card-body-->
                         <div class="app-card-footer p-4 mt-auto">
-                            @* <input onclick="submitForms()" type="submit" class="btn app-btn-secondary" href="#" value="Manage Profile" /> *@
-                            <input type="submit" class="btn app-btn-secondary" href="#" value="Manage Profile" form="form1" />
-                            <input type="submit" class="btn app-btn-secondary" href="#" value="Manage Profile" form="form2" />
+                            <input id="submitButton" type="submit" class="btn app-btn-secondary" href="#" value="Sửa hồ sơ" />
                         </div><!--//app-card-footer-->
                     </div><!--//app-card-->
                 </div><!--//col-->
@@ -88,7 +102,7 @@
 
                                 </div><!--//col-->
                                 <div class="col-auto">
-                                    <h4 class="app-card-title">Security</h4>
+                                    <h4 class="app-card-title">Bảo mật</h4>
                                 </div><!--//col-->
                             </div><!--//row-->
                         </div><!--//app-card-header-->
@@ -97,18 +111,24 @@
                             <div class="item border-bottom py-3">
                                 <div class="row justify-content-between align-items-center">
                                     <div class="col-auto">
-                                        <div class="item-label"><strong>Password</strong></div>
+                                        <div class="item-label"><strong>Mật khẩu</strong></div>
                                         <div class="item-data">••••••••</div>
                                     </div><!--//col-->
-                                    <div class="col text-end">
+                                    <div class="col text-end d-none">
                                         <a class="btn-sm app-btn-secondary" href="#">Change</a>
                                     </div><!--//col-->
                                 </div><!--//row-->
                             </div><!--//item-->
+                            <form id="form" asp-action="EditPassword" method="post" asp-route-id="@Model.AccountId">
+                                <div class="form-group item">
+                                    <label class="item">Mật khẩu mới</label>
+                                    <input name="newpassword" class="form-control" />
+                                    <span class="text-danger"></span>
+                                </div>
+                            </form>
                         </div><!--//app-card-body-->
-
                         <div class="app-card-footer p-4 mt-auto">
-                            <a class="btn app-btn-secondary" href="#">Manage Security</a>
+                            <input form="form" type="submit" class="btn app-btn-secondary" href="#" value="Sửa bảo mật" />
                         </div><!--//app-card-footer-->
 
                     </div><!--//app-card-->
@@ -156,31 +176,12 @@
                 previewImg.src = "";
             }
         }
-        function submitForms() {
-            var form1Data = new FormData(document.getElementById("form1"));
-            var form2Data = new FormData(document.getElementById("form2"));
-
-            var request1 = fetch("/Edit", {
-                method: "POST",
-                body: form1Data
-            });
-
-            var request2 = fetch("/Upload", {
-                method: "POST",
-                body: form2Data
-            });
-
-            Promise.all([request1, request2])
-                .then(function (responses) {
-                    // Xử lý kết quả từ hai request
-                    console.log("Form 1 response:", responses[0]);
-                    console.log("Form 2 response:", responses[1]);
-                })
-                .catch(function (error) {
-                    // Xử lý lỗi
-                    console.error("Error:", error);
-                });
-        }
+        document.getElementById("submitButton").addEventListener("click", function () {
+            var form1 = document.getElementById("form1");
+            var form2 = document.getElementById("form2");
+            form1.submit();
+            form2.submit();
+        });
     </script>
 
 </div><!--//app-wrapper-->

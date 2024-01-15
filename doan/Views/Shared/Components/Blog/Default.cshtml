@@ -3,7 +3,8 @@
 
 @model IList<Blog>
  @{
-   List<BlogComment> blogComment = ViewBag.blogComment;
+    List<BlogComment> blogComment = ViewBag.comment;
+    List<Category> blogCategory = ViewBag.cat;
 }
  
 <style>
@@ -24,13 +25,15 @@
 <div class="blog">
     <div class="container">
         <div class="section-header text-center">
-            <p>Food Blog</p>
-            <h2>Latest From Food Blog</h2>
+            <p>Bài viết</p>
+            <h2>Bài viết mới nhất</h2>
         </div>
         <div class="row">
             @foreach (var item in Model)
             {
-                @* var commentCount = blogComment.Where(m => m.BlogId == item.BlogId); *@
+                var comment = blogComment.Where(m => m.BlogId == item.BlogId);
+                var cat = blogCategory.Where(m => m.CategoryId == item.CategoryId);
+
                 string url = Functions.TitleSlugGeneration("blog", item.Title, item.BlogId);
                 <div class="col-md-6">
                     <div class="blog-item">
@@ -41,9 +44,9 @@
                             <h2 class="blog-title thugont">@item.Title</h2>
                             <div class="blog-meta">
                                 <p><i class="far fa-user"></i>@item.CreatedBy</p>
-                                <p><i class="far fa-list-alt"></i>Food</p>
+                                <p><i class="far fa-list-alt"></i>@cat.First().Title</p>
                                 <p><i class="far fa-calendar-alt"></i>@item.CreatedDate.ToString("dd-MM-yyyy")</p>
-                                <p><i class="far fa-comments"></i>@* @blogComment.Count() *@</p>
+                                <p><i class="far fa-comments"></i> @comment.Count()</p>
                             </div>
                             <div class="blog-text">
                                 <p class="thugond">

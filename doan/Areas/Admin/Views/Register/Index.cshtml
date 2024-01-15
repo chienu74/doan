@@ -31,25 +31,30 @@
 			<div class="d-flex flex-column align-content-end">
 				<div class="app-auth-body mx-auto">
 					<div class="app-auth-branding mb-4"><a class="app-logo" href="index.html"><img class="logo-icon me-2" src="~/admin/assets/images/app-logo.svg" alt="logo"></a></div>
-					<h2 class="auth-heading text-center mb-4">Sign up to Portal</h2>
+					<h2 class="auth-heading text-center mb-4">Tạo tài khoản </h2>
 
 					<div class="auth-form-container text-start mx-auto">
 						<form class="row g-3 needs-validation" novalidate asp-controller="Register" asp-action="Index">
 
 							<div class="col-12">
-								<label for="yourName" class="form-label">Your Name</label>
+								<label for="yourName" class="form-label">Tên đầy đủ</label>
+								<input type="text" asp-for="FullName" class="form-control" id="yourName" required>
+								<div class="invalid-feedback">Please, enter your name!</div>
+							</div>
+							<div class="col-12">
+								<label for="yourName" class="form-label">Tên đăng nhập</label>
 								<input type="text" asp-for="Username" class="form-control" id="yourName" required>
 								<div class="invalid-feedback">Please, enter your name!</div>
 							</div>
 
 							<div class="col-12">
-								<label for="yourEmail" class="form-label">Your Email</label>
+								<label for="yourEmail" class="form-label">Email</label>
 								<input type="email" asp-for="Email" class="form-control" id="yourEmail" required>
 								<div class="invalid-feedback">Please enter a valid Email adddress!</div>
 							</div>
 
 							<div class="col-12">
-								<label for="yourPassword" class="form-label">Password</label>
+								<label for="yourPassword" class="form-label">Mật khẩu</label>
 								<input type="password" asp-for="Password" class="form-control" id="yourPassword" required>
 								<div class="invalid-feedback">Please enter your password!</div>
 							</div>
@@ -65,16 +70,15 @@
 							</div>
 
 							<div class="col-12">
-								<button class="btn btn-primary w-100" type="submit">Create Account</button>
+								<button class="btn btn-primary w-100" type="submit">Tạo tài khoản</button>
 							</div>
 
 							<div class="col-12">
-								<p class="small mb-0">Already have an account? <a href="/Admin/Login">Log in</a></p>
+								<p class="small mb-0">Bạn đã có tài khoản? <a href="/Admin/Login">Đăng nhập</a></p>
 							</div>
 
 						</form>
 
-						<div class="auth-option text-center pt-5">Already have an account? <a class="text-link" href="login.html">Log in</a></div>
 					</div><!--//auth-form-container-->
 
 
@@ -94,7 +98,7 @@
 			<div class="auth-background-holder">
 			</div>
 			<div class="auth-background-mask"></div>
-			<div class="auth-background-overlay p-3 p-lg-5">
+			<div class="auth-background-overlay p-3 p-lg-5 d-none">
 				<div class="d-flex flex-column align-content-end h-100">
 					<div class="h-100"></div>
 					<div class="overlay-content p-3 p-lg-4 rounded">

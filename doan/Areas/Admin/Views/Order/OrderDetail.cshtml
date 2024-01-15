@@ -1,0 +1,38 @@
+﻿@model List<doan.Areas.Admin.Controllers.OrderController.OrderDetailList>
+@{
+    ViewData["Controller"] = "Order";
+    ViewData["Action"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="app-wrapper">
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="container-xl">
+            <table class="table">
+                <tr>
+                    <th>Tên sản phẩm</th>
+                    <th>giá</th>
+                    <th>Số lượng</th>
+                </tr>
+                @{
+                    double? sum = 0;
+                }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ProductName</td>
+                        <td>@item.Price</td>
+                        <td>@item.Quantity</td>
+                    </tr>
+                    sum += item.TotalAmount;
+                }
+                <tr>
+                    <td><h3>Tổng :</h3></td>
+                    <td><h3> @sum</h3></td>
+                </tr>
+            </table>
+            <div>
+                <a asp-action="Index"> <i class="fa-solid fa-arrow-left"></i> Quay lại</a>
+            </div>
+        </div>
+    </div>
+</div>
